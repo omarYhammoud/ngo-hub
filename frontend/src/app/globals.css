@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --ima-red: #ed1c24;
+  --ima-red-dark: #b91c1c;
+  --ima-red-light: #fef2f2;
+  --ima-green: #00a651;
+  --ima-green-dark: #007a3d;
+  --ima-green-light: #ecfdf3;
+  --background: #f7f8f7;
+  --surface: #ffffff;
+  --foreground: #171717;
+  --text-secondary: #66706b;
+  --border: #e5e7e6;
+  --info: #2563eb;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --success: #00a651;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+  body { margin: 0; background: var(--surface); color: var(--foreground); font-family: var(--font-sans); }
+  html[lang="ar"] body, [lang="ar"] { font-family: var(--font-cairo), var(--font-inter), sans-serif; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ima-green-dark); outline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+}
+
+@layer components {
+  .page-container { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .card { @apply rounded-xl border border-[var(--border)] bg-white; }
+  .button { @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-transparent px-3 py-2 text-sm font-medium transition-colors; }
+  .button-primary { @apply bg-[var(--ima-red)] text-white hover:bg-[var(--ima-red-dark)]; }
+  .button-secondary { @apply border-[var(--border)] bg-white text-[var(--foreground)] hover:bg-[var(--background)]; }
+  .button-positive { @apply bg-[var(--ima-green-dark)] text-white hover:bg-[#006631]; }
+  .nav-link { @apply rounded-lg px-2.5 py-2.5 text-start text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--background)] hover:text-[var(--ima-red-dark)]; }
+  .nav-link[aria-current="page"] { @apply bg-[var(--ima-red-light)] text-[var(--ima-red-dark)]; }
+  .skip-link { @apply fixed start-4 top-2 z-50 -translate-y-24 rounded-lg bg-white px-4 py-3 shadow-md focus:translate-y-0; }
+}

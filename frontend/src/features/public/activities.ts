@@ -1,0 +1,7 @@
+// Adapted sample data from Claude's prototype. Locations are omitted until actual events are confirmed.
+export const activities = [
+  { date: '2026-09-10', title: { en: 'New oxygen concentrators added to our lending stock', ar: 'إضافة أجهزة أوكسجين جديدة إلى مخزون الإعارة' }, description: { en: "Thanks to a donor contribution, we've added six new oxygen concentrators to our lending stock.", ar: 'بفضل مساهمة أحد المتبرعين، ضفنا ستة أجهزة أوكسيجين جديدة لمخزون الإعارة.' } },
+  { date: '2026-09-02', title: { en: 'Community first-aid training session', ar: 'جلسة تدريب مجتمعية على الإسعافات الأولية' }, description: { en: 'Twenty community members completed a half-day basic first-aid workshop with our paramedic team.', ar: 'عشرين شخص من المجتمع أكملوا ورشة إسعافات أولية أساسية مع فريق المسعفين.' } },
+  { date: '2026-08-22', title: { en: '200th ambulance mission completed this quarter', ar: 'إنجاز المهمة رقم ٢٠٠ لهالفصل' }, description: { en: 'Our crews reached a milestone of 200 missions this quarter across our service area.', ar: 'وصل فريقنا لمعلم ٢٠٠ مهمة هالفصل ضمن نطاق خدمتنا.' } },
+  { date: '2026-08-05', title: { en: 'Volunteer driver training completed', ar: 'إكمال تدريب السائقين المتطوعين' }, description: { en: 'Four new volunteer drivers finished orientation and are now part of the response rotation.', ar: 'أربعة سائقين متطوعين جدد أنهوا التوجيه وصاروا جزء من فريق الاستجابة.' } },
+];
