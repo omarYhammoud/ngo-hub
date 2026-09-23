@@ -2,6 +2,7 @@ import type { Dictionary, Locale } from '@/i18n/dictionaries';
 import { ServiceCards } from '@/components/shared/ServicesSection';
 import { ActivityCards } from '@/components/shared/ActivitiesSection';
 import ButtonLink from '@/components/ui/ButtonLink';
+import StaffPortal from '@/features/auth/StaffPortal';
 
 export const publicPages = ['about', 'services', 'activities', 'volunteer', 'donate', 'contact', 'login'] as const;
 export type PublicPage = typeof publicPages[number];
@@ -24,7 +25,8 @@ export default function InformationPage({ page, copy, locale }: { page: PublicPa
     </>}
     {page === 'services' && <ServiceCards copy={copy} />}
     {page === 'activities' && <><p className="mb-6 text-sm text-[var(--text-secondary)]">{copy.sample_note}</p><ActivityCards locale={locale} /></>}
-    {['volunteer', 'donate', 'contact', 'login'].includes(page) && <div className="max-w-2xl">
+    {page === 'login' && <><p className="mb-6 text-[var(--text-secondary)]">{copy.login_sub}</p><StaffPortal locale={locale} /></>}
+    {['volunteer', 'donate', 'contact'].includes(page) && <div className="max-w-2xl">
       <p className="mb-6 leading-relaxed text-[var(--text-secondary)]">{introductions[page]}</p>
       <section className="card border-s-4 border-s-[var(--ima-red)] p-6">
         <h2 className="mb-2 font-semibold">{copy.unavailable}</h2>

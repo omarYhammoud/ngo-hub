@@ -1,8 +1,9 @@
+.venv/
+.env
 __pycache__/
 *.py[cod]
 *.sqlite3
-.env
-.venv/
 staticfiles/
+.local-admin.txt
 media/
 *.log

@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+Staff login at `/en/login` and `/ar/login` connects to Django through server actions. Start the backend on port 8000 first (see `../backend/README.md`). Set `DJANGO_API_URL` in `.env.local` if the backend uses another address; never prefix this setting with `NEXT_PUBLIC_`. Tokens are stored in HttpOnly cookies with automatic refresh rotation. Successful login shows a staff profile and sign-out control; operational modules are still under development.
+
+Run `npm test`, `npm run lint`, and `npm run build` to verify authentication, code checks, and the production build. If a stale global npm shim fails on Windows, use `& 'C:/Program Files/nodejs/npm.cmd' run dev` (or the corresponding npm command).
+
 ## Getting Started
 
 First, run the development server:
