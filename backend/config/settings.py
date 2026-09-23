@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles",
     "rest_framework", "corsheaders", "rest_framework_simplejwt.token_blacklist",
     "apps.accounts", "apps.missions", "apps.equipment", "apps.vehicles",
-    "apps.reports", "apps.ai_assistant",
+    "apps.reports", "apps.ai_assistant", "apps.core",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware", "corsheaders.middleware.CorsMiddleware",

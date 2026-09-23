@@ -43,6 +43,7 @@ Send `Authorization: Bearer <access>` to authenticated endpoints. Access tokens 
 
 ## Apps and scope
 
+- core: public `GET /api/health/` endpoint returning API status; retained from the backend foundation.
 - accounts: custom User, Admin/Paramedic roles, reusable IsAdminRole permission, admin UI, JWT endpoints.
 - missions: initial Mission model, assigned paramedics, creator, timestamps, notes, five status choices and database constraint. Statuses: Pending, Assigned, In Progress, Completed, Cancelled.
 - equipment, vehicles, reports, ai_assistant: registered app skeletons for later milestones.
