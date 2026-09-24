@@ -14,6 +14,7 @@ export function pageTitle(page: PublicPage, copy: Dictionary) {
 }
 
 export default function InformationPage({ page, copy, locale }: { page: PublicPage; copy: Dictionary; locale: Locale }) {
+  if (page === 'login') return <StaffPortal locale={locale} />;
   const introductions: Partial<Record<PublicPage, string>> = { volunteer: copy.volunteer_cta_body, donate: copy.donate_cta_body, contact: copy.footer_tagline, login: copy.login_sub };
   const pendingMessages: Partial<Record<PublicPage, string>> = { volunteer: copy.volunteer_pending, donate: copy.donate_pending, contact: copy.contact_pending, login: copy.login_pending };
   return <div className="page-container min-h-[55vh] py-16">
@@ -25,7 +26,6 @@ export default function InformationPage({ page, copy, locale }: { page: PublicPa
     </>}
     {page === 'services' && <ServiceCards copy={copy} />}
     {page === 'activities' && <><p className="mb-6 text-sm text-[var(--text-secondary)]">{copy.sample_note}</p><ActivityCards locale={locale} /></>}
-    {page === 'login' && <><p className="mb-6 text-[var(--text-secondary)]">{copy.login_sub}</p><StaffPortal locale={locale} /></>}
     {['volunteer', 'donate', 'contact'].includes(page) && <div className="max-w-2xl">
       <p className="mb-6 leading-relaxed text-[var(--text-secondary)]">{introductions[page]}</p>
       <section className="card border-s-4 border-s-[var(--ima-red)] p-6">

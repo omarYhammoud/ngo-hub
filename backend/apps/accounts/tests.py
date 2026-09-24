@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.db import IntegrityError, transaction
 from rest_framework.test import APITestCase, APIRequestFactory
-from .models import User
+from .models import User, Role
 from .permissions import IsAdminRole
 
 
@@ -51,7 +51,7 @@ class AuthenticationTests(APITestCase):
 
     def test_roles_and_superuser(self):
         admin = User.objects.create_superuser('admin', password='test-password')
-        self.assertEqual(admin.role, User.Role.ADMIN)
+        self.assertEqual(admin.role.code, User.Role.SUPER_ADMIN)
         request = APIRequestFactory().get('/')
         request.user = self.user
         self.assertFalse(IsAdminRole().has_permission(request, None))
@@ -60,7 +60,7 @@ class AuthenticationTests(APITestCase):
         with self.assertRaises(ValueError):
             User.objects.create_superuser('invalid-admin', role='PARAMEDIC')
         with self.assertRaises(IntegrityError), transaction.atomic():
-            User.objects.filter(pk=self.user.pk).update(role='DISPATCHER')
+            Role.objects.create(code='DISPATCHER', name='Invalid role')
 
     def test_login_throttled(self):
         for _ in range(10):

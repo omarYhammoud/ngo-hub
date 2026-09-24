@@ -1,0 +1,5 @@
+export type Crew = { user_id: number; name?: string; crew_role: string; actual?: boolean };
+export type Vehicle = { id: number; code: string; plate_number: string; type: string; model: string; year: number | null; mileage: number; status: string };
+export type Mission = { id: number; mission_number: string; title: string; date: string | null; actual_start: string | null; actual_end: string | null; location: string; incident_type: string; destination: string; notes: string; status: string; cancellation_reason: string; vehicle_id: number | null; vehicle_code: string; created_by_id: number; creator_name: string; created_at: string; updated_at: string; crew: Crew[]; audit?: {id: number; actor_name: string; action: string; reason: string; before: Record<string, unknown>; after: Record<string, unknown>; created_at: string}[] };
+export type Staff = {id: number; username: string; first_name: string; last_name: string; phone: string; email: string; role: string; is_active: boolean};
+export type Api = <T>(path: string, method?: 'GET'|'POST'|'PATCH', body?: unknown) => Promise<T>;
