@@ -1,5 +1,20 @@
 import type { Locale } from '@/i18n/dictionaries';
 const copy: Record<string, [string, string]> = {
+ 'vehicle-issues':['Vehicle Issues / Maintenance','بلاغات المركبات / الصيانة'],
+ vi_issue:['Issue','بلاغ'], vi_report:['Report vehicle issue','تسجيل بلاغ مركبة'], vi_back:['Back to vehicle issues','العودة إلى بلاغات المركبات'],
+ vi_category:['Category / type','الفئة / النوع'], vi_severity:['Severity','الخطورة'], vi_description:['Description','الوصف'], vi_notes:['Maintenance notes','ملاحظات الصيانة'],
+ vi_reported_by:['Reported by','أبلغ بواسطة'], vi_reported_at:['Reported at','وقت الإبلاغ'], vi_resolved_by:['Resolved by','عولج بواسطة'], vi_resolved_at:['Resolved at','وقت المعالجة'],
+ vi_send:['Send to maintenance','إرسال إلى الصيانة'], vi_resolve:['Resolve issue','معالجة البلاغ'], vi_field:['Field','الحقل'],
+ vi_OPEN:['Open','مفتوح'], vi_IN_MAINTENANCE:['In Maintenance','قيد الصيانة'], vi_RESOLVED:['Resolved','تمت المعالجة'],
+ vi_LOW:['Low','منخفضة'], vi_MEDIUM:['Medium','متوسطة'], vi_HIGH:['High','عالية'], vi_CRITICAL:['Critical','حرجة'],
+ vi_hint:['Open reports do not block dispatch. Sending an issue to maintenance prevents new vehicle assignments and mission starts.','البلاغات المفتوحة لا تمنع التكليف. إرسال البلاغ إلى الصيانة يمنع تكليف المركبة وبدء مهمات جديدة بها.'],
+ vi_resolution_hint:['Describe the outcome in maintenance notes before resolving. Other maintenance holds and active missions are preserved.','دوّن نتيجة المعالجة في ملاحظات الصيانة قبل إغلاق البلاغ. تبقى قيود الصيانة الأخرى والمهمات النشطة محفوظة.'],
+ vi_manual_hold:['This vehicle has a manual maintenance hold. Resolve issues first, then release the hold from Vehicles when appropriate.','هذه المركبة قيد الصيانة يدوياً. عالج البلاغات أولاً ثم حدّث حالتها من صفحة المركبات عند الملاءمة.'],
+ vi_locked:['Resolved issues are locked. Report a new issue for a new problem.','البلاغات المعالجة مغلقة. سجّل بلاغاً جديداً لأي مشكلة جديدة.'], vi_load_failed:['Unable to load vehicle issues.','تعذر تحميل بلاغات المركبات.'],
+ issue_closed:['This issue is resolved and cannot be changed.','تمت معالجة هذا البلاغ ولا يمكن تعديله.'], issue_invalid_transition:['This transition is not allowed for the current issue status.','هذا الانتقال غير مسموح لحالة البلاغ الحالية.'], issue_resolution_notes_required:['Enter maintenance notes describing the resolution.','أدخل ملاحظات الصيانة التي تشرح المعالجة.'], issue_unknown_fields:['Only the fields for this action may be changed.','يمكن تعديل حقول هذا الإجراء فقط.'], vehicle_issue_maintenance_hold:['Resolve all issues in maintenance before releasing the vehicle.','عالج جميع البلاغات قيد الصيانة قبل إتاحة المركبة.'],
+ vi_action_report:['Reported','تم الإبلاغ'], vi_action_notes:['Notes updated','تم تحديث الملاحظات'], vi_action_maintenance:['Sent to maintenance','أرسل إلى الصيانة'], vi_action_resolve:['Resolved','تمت المعالجة'],
+ vi_audit_vehicle:['Vehicle ID','رقم المركبة'], vi_audit_vehicle_status:['Vehicle status','حالة المركبة'], vi_audit_manual_maintenance:['Manual maintenance hold','صيانة يدوية'], vi_audit_category:['Category','الفئة'], vi_audit_severity:['Severity','الخطورة'], vi_audit_description:['Description','الوصف'], vi_audit_status:['Issue status','حالة البلاغ'], vi_audit_maintenance_notes:['Maintenance notes','ملاحظات الصيانة'], vi_audit_reported_by:['Reporter ID','رقم المبلّغ'], vi_audit_reported_at:['Reported at','وقت الإبلاغ'], vi_audit_resolved_by:['Resolver ID','رقم المعالج'], vi_audit_resolved_at:['Resolved at','وقت المعالجة'],
+
  Trauma:['Trauma','إصابة'], Cardiac:['Cardiac','حالة قلبية'], Respiratory:['Respiratory','حالة تنفسية'], Fall:['Fall','سقوط'], Other:['Other','أخرى'],
  finishMission:['Finish mission','إنهاء المهمة'], actualEndOptional:['Actual end (optional)','النهاية الفعلية (اختياري)'],
  resetPassword:['Reset password','إعادة تعيين كلمة المرور'], new_password:['New password','كلمة المرور الجديدة'], confirm_password:['Confirm new password','تأكيد كلمة المرور الجديدة'], showPassword:['Show passwords','إظهار كلمات المرور'], hidePassword:['Hide passwords','إخفاء كلمات المرور'], password_mismatch:['The new passwords do not match.','كلمتا المرور الجديدتان غير متطابقتين.'], password_reset_success:['Password reset successfully.','تمت إعادة تعيين كلمة المرور بنجاح.'], use_password_reset:['Use the Reset password action to change a password.','استخدم إجراء إعادة تعيين كلمة المرور لتغييرها.'],
@@ -10,14 +25,296 @@ crewDriver: ['Driver', 'سائق'], vehicles:['Vehicles','المركبات'], po
 
 };
 Object.assign(copy, {
-  activityStaffName: ['Staff member', 'الموظف'],
-  activityMissionTotal: ['Completed missions', 'المهمات المكتملة'],
-  activityParticipationTotal: ['Staff participations', 'مشاركات الموظفين'],
-  activityLoadError: ['Could not load staff activity. Please try again.', 'تعذر تحميل نشاط الموظفين. يرجى المحاولة مجدداً.'],
+  equipment: ['Equipment', 'المعدات'],
+  lending: ['Lending', 'الإعارة'],
+  equipmentHint: ['Track individual items and their availability.', 'متابعة المعدات وتوفرها.'],
+  lendingHint: ['Check out equipment, record returns, and review overdue loans.', 'إعارة المعدات وتسجيل إرجاعها ومتابعة الإعارات المتأخرة.'],
+  equipmentCode: ['Equipment code', 'رمز المعدة'],
+  equipmentName: ['Equipment name', 'اسم المعدة'],
+  equipmentNotes: ['Notes', 'ملاحظات'],
+  addEquipment: ['Add equipment', 'إضافة معدة'],
+  checkout: ['Check out equipment', 'إعارة معدة'],
+  returnEquipment: ['Record return', 'تسجيل الإرجاع'],
+  borrower_name: ['Borrower name', 'اسم المستعير'],
+  borrower_phone: ['Borrower phone', 'هاتف المستعير'],
+  borrower_address: ['Borrower address (optional)', 'عنوان المستعير (اختياري)'],
+  due_date: ['Return due date', 'تاريخ الإرجاع المتوقع'],
+  dueDateHint: ['Due dates follow Beirut time. A loan becomes overdue the following day.', 'تعتمد المواعيد توقيت بيروت. تصبح الإعارة متأخرة في اليوم التالي للموعد.'],
+  checked_out_at: ['Checked out', 'تاريخ الإعارة'],
+  returned_at: ['Returned', 'تاريخ الإرجاع'],
+  return_status: ['Condition after return', 'الحالة بعد الإرجاع'],
+  return_notes: ['Return notes', 'ملاحظات الإرجاع'],
+  serial_number: ['Serial number (optional)', 'الرقم التسلسلي (اختياري)'],
+  ON_LOAN: ['On loan', 'قيد الإعارة'],
+  RETIRED: ['Retired', 'خارج الخدمة'],
+  OVERDUE: ['Overdue', 'متأخرة'],
+  RETURNED: ['Returned', 'أُعيدت'],
+  noAvailableEquipment: ['No equipment is currently available.', 'لا توجد معدات متاحة حالياً.'],
+  equipment_unavailable: ['This equipment is no longer available. Refresh and choose another item.', 'لم تعد هذه المعدة متاحة. حدّث الصفحة واختر معدة أخرى.'],
+  equipment_on_loan_locked: ['Return this item before editing it.', 'سجّل إرجاع هذه المعدة قبل تعديلها.'],
+  equipment_status_automatic: ['On loan status is controlled by checkout and return.', 'تُضبط حالة الإعارة تلقائياً عند الإعارة والإرجاع.'],
+  loan_already_returned: ['This loan has already been returned.', 'سُجّل إرجاع هذه الإعارة بالفعل.'],
+  due_date_in_past: ['The due date cannot be before today.', 'لا يمكن أن يسبق موعد الإرجاع تاريخ اليوم.'],
+  resourceNotFound: [
+    'The requested page or service was not found. If you just updated the backend, restart it and retry.',
+    'لم يتم العثور على الصفحة أو الخدمة المطلوبة. إذا حدّثت الخادم للتو، فأعد تشغيله وحاول مجدداً.',
+  ],
+
+  activityMonthly: [
+    'Completed missions by month',
+    'المهمات المكتملة حسب الشهر',
+  ],
+
+  activityIncidents: [
+    'Completed missions by incident type',
+    'المهمات المكتملة حسب نوع الحادث',
+  ],
+
+  activityUndated: [
+    'Missions without a recorded date',
+    'مهمات دون تاريخ مسجل',
+  ],
+
+  activityUnspecified: [
+    'Not specified',
+    'غير محدد',
+  ],
+
+  activityHistory: [
+    'Mission participation history',
+    'سجل المشاركة في المهمات',
+  ],
+
+  activityStaffName: [
+    'Staff member',
+    'الموظف',
+  ],
+
+  activityMissionTotal: [
+    'Completed missions',
+    'المهمات المكتملة',
+  ],
+
+  activityParticipationTotal: [
+    'Staff participations',
+    'مشاركات الموظفين',
+  ],
+
+  activityLoadError: [
+    'Could not load staff activity. Please try again.',
+    'تعذر تحميل نشاط الموظفين. يرجى المحاولة مجدداً.',
+  ],
+
+  reports: [
+    'Reports',
+    'التقارير',
+  ],
+
+  reportsHint: [
+    'Filter and review the missions you have permission to access.',
+    'تصفية واستعراض المهمات التي تملك صلاحية الوصول إليها.',
+  ],
+
+  reportSummary: [
+    'Mission summary',
+    'ملخص المهمات',
+  ],
+
+  reportTotalsHint: [
+    'Totals include all matching missions across all pages.',
+    'تشمل الأعداد جميع المهمات المطابقة في كل الصفحات.',
+  ],
+
+  reportLoadError: [
+    'Could not load the report. Please try again.',
+    'تعذر تحميل التقرير. يرجى المحاولة مجدداً.',
+  ],
+
+  reportDateError: [
+    'The end date must be on or after the start date.',
+    'يجب أن يكون تاريخ النهاية في تاريخ البداية أو بعده.',
+  ],
+
+  // =======================================================
+  // Submissions
+  // =======================================================
+
+  submissions: [
+    'Submissions',
+    'الطلبات',
+  ],
+
+  submissionsHint: [
+    'Review contact messages and volunteer applications received from the public website.',
+    'مراجعة رسائل التواصل وطلبات التطوع الواردة من الموقع العام.',
+  ],
+
+  contactSubmissions: [
+    'Contact messages',
+    'رسائل التواصل',
+  ],
+
+  volunteerApplications: [
+    'Volunteer applications',
+    'طلبات التطوع',
+  ],
+
+  contactMessage: [
+    'Contact message',
+    'رسالة تواصل',
+  ],
+
+  volunteerApplication: [
+    'Volunteer application',
+    'طلب تطوع',
+  ],
+
+  applicant: [
+    'Applicant',
+    'مقدم الطلب',
+  ],
+
+  name: [
+    'Name',
+    'الاسم',
+  ],
+
+  subject: [
+    'Subject',
+    'الموضوع',
+  ],
+
+  message: [
+    'Message',
+    'الرسالة',
+  ],
+
+  area: [
+    'Area',
+    'المنطقة',
+  ],
+
+  submittedAt: [
+    'Submitted at',
+    'وقت الإرسال',
+  ],
+
+  reviewedBy: [
+    'Reviewed by',
+    'تمت المراجعة بواسطة',
+  ],
+
+  reviewedAt: [
+    'Reviewed at',
+    'وقت المراجعة',
+  ],
+
+  submissionStatus: [
+    'Submission status',
+    'حالة الطلب',
+  ],
+
+  NEW: [
+    'New',
+    'جديد',
+  ],
+
+  REVIEWED: [
+    'Reviewed',
+    'تمت المراجعة',
+  ],
+
+  CLOSED: [
+    'Closed',
+    'مغلق',
+  ],
+
+  markReviewed: [
+    'Mark as reviewed',
+    'تحديد كمراجع',
+  ],
+
+  markClosed: [
+    'Close submission',
+    'إغلاق الطلب',
+  ],
+
+  reopenSubmission: [
+    'Return to new',
+    'إعادة إلى جديد',
+  ],
+
+  contactEmpty: [
+    'No contact messages found.',
+    'لا توجد رسائل تواصل.',
+  ],
+
+  volunteerEmpty: [
+    'No volunteer applications found.',
+    'لا توجد طلبات تطوع.',
+  ],
+
+  submissionsLoadError: [
+    'Could not load submissions. Please try again.',
+    'تعذر تحميل الطلبات. يرجى المحاولة مجدداً.',
+  ],
+
+  submissionUpdateError: [
+    'Could not update the submission. Please try again.',
+    'تعذر تحديث حالة الطلب. يرجى المحاولة مجدداً.',
+  ],
+
+  submissionUpdated: [
+    'Submission updated successfully.',
+    'تم تحديث الطلب بنجاح.',
+  ],
+
+  filterByStatus: [
+    'Filter by status',
+    'تصفية حسب الحالة',
+  ],
+
+  contactTab: [
+    'Contact',
+    'التواصل',
+  ],
+
+  volunteerTab: [
+    'Volunteers',
+    'المتطوعون',
+  ],
+
+  viewDetails: [
+    'View details',
+    'عرض التفاصيل',
+  ],
+
+  noSubject: [
+    'No subject',
+    'بدون موضوع',
+  ],
 });
 
-export function translator(locale: Locale) { return (key: string) => copy[key]?.[locale === 'ar' ? 1 : 0] || key; }
-export type T = ReturnType<typeof translator>;
-export const roles = ['SUPER_ADMIN','OPERATIONS_MANAGER','PARAMEDIC','LENDING_OFFICER','VEHICLE_MANAGER'];
+export function translator(locale: Locale) {
+  return (key: string) =>
+    copy[key]?.[locale === 'ar' ? 1 : 0] || key;
+}
 
-export const incidentTypes: string[] = ['Trauma','Cardiac','Respiratory','Fall','Other'];
+export type T = ReturnType<typeof translator>;
+
+export const roles = [
+  'SUPER_ADMIN',
+  'OPERATIONS_MANAGER',
+  'PARAMEDIC',
+  'LENDING_OFFICER',
+  'VEHICLE_MANAGER',
+];
+
+export const incidentTypes: string[] = [
+  'Trauma',
+  'Cardiac',
+  'Respiratory',
+  'Fall',
+  'Other',
+];
+

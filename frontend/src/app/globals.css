@@ -1,114 +1,4841 @@
 @import "tailwindcss";
 
+
+/* =========================================================
+   NGO Hub Theme
+   ========================================================= */
+
 :root {
   color-scheme: light;
+
   --ima-red: #ed1c24;
   --ima-red-dark: #b91c1c;
   --ima-red-light: #fef2f2;
+
   --ima-green: #00a651;
   --ima-green-dark: #007a3d;
   --ima-green-light: #ecfdf3;
+
   --background: #f7f8f7;
   --surface: #ffffff;
+
   --foreground: #171717;
   --text-secondary: #66706b;
+
   --border: #e5e7e6;
+
   --info: #2563eb;
   --warning: #d97706;
   --danger: #dc2626;
   --success: #00a651;
 }
 
+
+/* =========================================================
+   Tailwind Font
+   ========================================================= */
+
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-inter),
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
 }
 
+
+/* =========================================================
+   Base
+   ========================================================= */
+
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
-  body { margin: 0; background: var(--surface); color: var(--foreground); font-family: var(--font-sans); }
-  html[lang="ar"] body, [lang="ar"] { font-family: var(--font-cairo), var(--font-inter), sans-serif; }
-  button, a { -webkit-tap-highlight-color: transparent; }
-  button { cursor: pointer; }
-  :focus-visible { outline: 2px solid var(--ima-green-dark); outline-offset: 4px; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    margin: 0;
+
+    background: var(--surface);
+    color: var(--foreground);
+
+    font-family:
+      var(--font-inter),
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+
+    font-weight: 400;
+  }
+
+
+  /* =======================================================
+     Arabic typography
+     ======================================================= */
+
+  html[lang="ar"],
+  html[lang="ar"] body {
+    font-family:
+      var(--font-arabic),
+      Arial,
+      sans-serif;
+
+    line-height: 1.75;
+  }
+
+
+  html[lang="ar"] p,
+  html[lang="ar"] span,
+  html[lang="ar"] li,
+  html[lang="ar"] td,
+  html[lang="ar"] th,
+  html[lang="ar"] label {
+    font-family:
+      var(--font-arabic),
+      Arial,
+      sans-serif;
+
+    font-weight: 400;
+  }
+
+
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] h5,
+  html[lang="ar"] h6 {
+    font-family:
+      var(--font-arabic),
+      Arial,
+      sans-serif;
+
+    font-weight: 700;
+
+    letter-spacing: 0;
+  }
+
+
+  html[lang="ar"] button,
+  html[lang="ar"] input,
+  html[lang="ar"] select,
+  html[lang="ar"] textarea {
+    font-family:
+      var(--font-arabic),
+      Arial,
+      sans-serif;
+  }
+
+
+  html[lang="ar"] button {
+    font-weight: 600;
+  }
+
+
+  html[lang="ar"] input,
+  html[lang="ar"] select,
+  html[lang="ar"] textarea {
+    font-weight: 400;
+  }
+
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+
+  button {
+    cursor: pointer;
+  }
+
+
+  :focus-visible {
+    outline: 2px solid var(--ima-green-dark);
+    outline-offset: 4px;
+  }
+
+
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
   }
 }
 
-@layer components {
-  .page-container { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
-  .card { @apply rounded-xl border border-[var(--border)] bg-white; }
-  .button { @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-transparent px-3 py-2 text-sm font-medium transition-colors; }
-  .button-primary { @apply bg-[var(--ima-red)] text-white hover:bg-[var(--ima-red-dark)]; }
-  .button-secondary { @apply border-[var(--border)] bg-white text-[var(--foreground)] hover:bg-[var(--background)]; }
-  .button-positive { @apply bg-[var(--ima-green-dark)] text-white hover:bg-[#006631]; }
-  .nav-link { @apply rounded-lg px-2.5 py-2.5 text-start text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--background)] hover:text-[var(--ima-red-dark)]; }
-  .nav-link[aria-current="page"] { @apply bg-[var(--ima-red-light)] text-[var(--ima-red-dark)]; }
-  .skip-link { @apply fixed start-4 top-2 z-50 -translate-y-24 rounded-lg bg-white px-4 py-3 shadow-md focus:translate-y-0; }
+
+/* =========================================================
+   Proper Arabic RTL Layout
+   ========================================================= */
+
+html[dir="rtl"],
+html[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
 }
 
-/* Staff portal: reference charcoal navigation, restrained IMA red, neutral cards. */
-.portal-shell { display:flex; min-height:100vh; background:#f4f6f5; color:#171717; }
-.portal-sidebar { position:sticky; top:0; height:100vh; width:248px; flex-shrink:0; background:#171717; color:white; display:flex; flex-direction:column; }
-.portal-brand { display:flex; align-items:center; gap:12px; padding:22px; border-bottom:1px solid #ffffff18; font-weight:750; font-size:20px; }
-.portal-brand img { border-radius:9px; background:white; }
-.portal-brand small,.portal-sidebar-bottom small { display:block; font-size:11px; color:#ffffff80; font-weight:400; margin-top:3px; }
-.portal-sidebar nav { padding:24px 12px; display:grid; gap:7px; }
-.portal-sidebar nav a { padding:12px 16px; border-radius:8px; color:#ffffffb8; font-size:14px; }
-.portal-sidebar nav a:hover { background:#ffffff0c; }
-.portal-sidebar nav a[aria-current] { background:#ed1c24; color:white; }
-.portal-sidebar-bottom { margin-top:auto; border-top:1px solid #ffffff18; padding:22px; display:grid; gap:16px; font-size:13px; }
-.portal-sidebar-bottom button { text-align:start; color:#fca5a5; }
-.portal-sidebar-bottom>a { color:#ffffff90; font-size:12px; }
-.portal-workspace { flex:1; min-width:0; }
-.portal-topbar { background:white; border-bottom:1px solid #e5e7e6; height:72px; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; font-size:14px; }
-.portal-topbar>div { display:flex; gap:22px; align-items:center; }
-.portal-avatar { border-radius:100%; display:grid; place-items:center; width:34px; height:34px; background:#fef2f2; color:#b91c1c; font-size:11px; font-weight:700; }
-.portal-content { padding:32px; max-width:1450px; margin:auto; }
-.portal-heading { display:flex; gap:20px; align-items:center; justify-content:space-between; margin:0 0 26px; flex-wrap:wrap; }
-.portal-heading h1 { font-size:26px; font-weight:750; letter-spacing:-.5px; margin-bottom:6px; }
-.portal-heading p { font-size:14px; color:#66706b; }
-.portal-heading .portal-eyebrow { font-size:10px; letter-spacing:2px; color:#b91c1c; font-weight:700; margin-bottom:7px; }
-.portal-card { border:1px solid #e5e7e6; border-radius:12px; background:white; padding:24px; margin-bottom:24px; box-shadow:0 1px 2px #17171703; }
-.portal-card h2 { font-size:16px; font-weight:700; margin-bottom:18px; }
-.portal-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
-.portal-kpis p { color:#66706b; font-size:13px; margin:12px 0 7px; }
-.portal-kpis strong { font-size:32px; line-height:1.3; }
-.portal-dot { display:block; width:10px; height:10px; background:#e5e7eb; border-radius:100%; }
-.portal-dot.ACTIVE { background:#ed1c24; }.portal-dot.COMPLETED { background:#00a651; }.portal-dot.PENDING { background:#d97706; }
-.portal-badge { display:inline-flex; padding:4px 9px; background:#f3f4f6; border-radius:6px; font-size:11px; white-space:nowrap; color:#66706b; font-weight:600; }
-.portal-badge.ACTIVE,.portal-badge.ON_MISSION { background:#eff4fe; color:#1d4ed8; }.portal-badge.COMPLETED,.portal-badge.AVAILABLE { background:#ecfdf3; color:#007a3d; }.portal-badge.PENDING,.portal-badge.MAINTENANCE { background:#fef6e7; color:#92530a; }.portal-badge.CANCELLED { background:#fef2f2; color:#b91c1c; }
-.portal-recent { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 0; border-top:1px solid #f0f1f0; font-size:13px; }
-.portal-recent small,.portal-table small { display:block; color:#66706b; font-size:12px; margin-top:4px; }
-.portal-table-wrap { overflow-x:auto; }
-.portal-table { width:100%; border-collapse:collapse; font-size:13px; }
-.portal-table th { text-align:start; color:#66706b; font-size:11px; font-weight:600; background:#f7f8f7; padding:13px 12px; white-space:nowrap; }
-.portal-table td { padding:15px 12px; border-bottom:1px solid #eef0ef; vertical-align:top; }
-.portal-table td>a { color:#b91c1c; font-weight:650; white-space:nowrap; }
-.portal-table pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:11px; max-width:360px; }
-.portal-filters { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; align-items:end; }
-.portal-field { display:flex; flex-direction:column; gap:7px; font-size:12px; font-weight:550; margin-bottom:16px; min-width:0; }
-.portal-field input,.portal-field select,.portal-field textarea { width:100%; min-height:42px; border:1px solid #dce1de; border-radius:7px; background:white; padding:10px 12px; color:#171717; font-size:14px; font-weight:400; }
-.portal-field textarea { min-height:90px; resize:vertical; }
-.portal-field input:focus,.portal-field select:focus,.portal-field textarea:focus { outline:2px solid #ed1c2430; border-color:#ed1c24; }
-.portal-field input:disabled,.portal-field select:disabled,.portal-field textarea:disabled { background:#f7f8f7; color:#5b625e; }
-.portal-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px 24px; border:0; margin:0; padding:0; }
-.portal-full { grid-column:1/-1; }
-.portal-buttons { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:16px; }
-.portal-crew { border-top:1px solid #e5e7e6; padding:20px 0; margin:10px 0; }
-.portal-crew legend,.portal-crew h2 { font-size:14px; font-weight:650; margin-bottom:14px; }
-.portal-crew-row { display:flex; align-items:center; gap:12px; }.portal-crew-row .portal-field { flex:1; }
-.portal-notice { background:#f7f8f7; border-inline-start:3px solid #d7ddda; padding:12px 15px; margin:12px 0 20px; font-size:12px; color:#66706b; }
-.portal-back { display:inline-block; font-size:12px; color:#66706b; margin-bottom:22px; }
-.portal-meta { display:flex; gap:24px; flex-wrap:wrap; font-size:12px; color:#66706b; margin-bottom:24px; }
-.portal-audit { border-top:1px solid #e5e7e6; padding:16px 0; font-size:12px; overflow-x:auto; }.portal-audit summary { cursor:pointer; }
-.portal-error { display:flex; justify-content:space-between; gap:14px; padding:16px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; border-radius:8px; margin-bottom:20px; font-size:14px; }
-.portal-error button { font-size:20px; }
-.portal-checkbox { display:flex; gap:10px; align-items:center; font-size:14px; }.portal-checkbox input { width:18px; height:18px; }
-.portal-loading { min-height:50vh; display:flex; gap:16px; flex-direction:column; align-items:center; justify-content:center; }
-.portal-empty { padding:40px 12px; text-align:center; color:#66706b; }.portal-empty p { font-size:13px; }
-.portal-mobile-toggle { display:none; }.portal-overlay { display:none; }
-.button-danger { background:#b91c1c; color:white; }.button:disabled { opacity:.5; cursor:not-allowed; }
-@media(max-width:1050px) { .portal-filters { grid-template-columns:repeat(2,minmax(0,1fr)); }.portal-content { padding:24px; }.portal-kpis { grid-template-columns:repeat(2,1fr); } }
-@media(max-width:760px) { .portal-sidebar { position:fixed; z-index:60; inset-inline-start:0; transform:translateX(-100%); transition:transform .2s; }[dir=rtl] .portal-sidebar { transform:translateX(100%); }.portal-sidebar.is-open { transform:translateX(0); }.portal-mobile-toggle { display:block; }.portal-overlay { display:block; position:fixed; inset:0; z-index:55; background:#0007; }.portal-topbar { padding:0 18px; }.portal-content { padding:20px 14px; }.portal-card { padding:18px; }.portal-heading h1 { font-size:22px; }.portal-form-grid { grid-template-columns:1fr; }.portal-crew-row { flex-wrap:wrap; }.portal-crew-row .portal-field { min-width:130px; } }
+
+/* General text */
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html[dir="rtl"] p,
+html[dir="rtl"] label,
+html[dir="rtl"] li {
+  text-align: right;
+}
+
+
+/* Normal form fields */
+
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+  direction: rtl;
+  text-align: right;
+}
+
+
+/*
+ * Email, phone, URL and technical values stay LTR
+ * because this is easier to read correctly.
+ */
+
+html[dir="rtl"] input[type="email"],
+html[dir="rtl"] input[type="tel"],
+html[dir="rtl"] input[type="url"],
+html[dir="rtl"] input[type="number"] {
+  direction: ltr;
+  text-align: left;
+}
+
+
+/* Technical text */
+
+html[dir="rtl"] code,
+html[dir="rtl"] pre {
+  direction: ltr;
+  text-align: left;
+}
+
+
+/* =========================================================
+   Shared Public Components
+   ========================================================= */
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+
+  .card {
+    @apply rounded-xl border border-[var(--border)] bg-white;
+  }
+
+
+  .button {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-transparent px-3 py-2 text-sm font-medium transition-colors;
+  }
+
+
+  .button-primary {
+    @apply bg-[var(--ima-red)] text-white hover:bg-[var(--ima-red-dark)];
+  }
+
+
+  .button-secondary {
+    @apply border-[var(--border)] bg-white text-[var(--foreground)] hover:bg-[var(--background)];
+  }
+
+
+  .button-positive {
+    @apply bg-[var(--ima-green-dark)] text-white hover:bg-[#006631];
+  }
+
+
+  .nav-link {
+    @apply rounded-lg px-2.5 py-2.5 text-start text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--background)] hover:text-[var(--ima-red-dark)];
+  }
+
+
+  .nav-link[aria-current="page"] {
+    @apply bg-[var(--ima-red-light)] text-[var(--ima-red-dark)];
+  }
+
+
+  .skip-link {
+    @apply fixed start-4 top-2 z-50 -translate-y-24 rounded-lg bg-white px-4 py-3 shadow-md focus:translate-y-0;
+  }
+}
+
+
+/* =========================================================
+   Public RTL
+   ========================================================= */
+
+html[dir="rtl"] .page-container {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .card {
+  direction: rtl;
+  text-align: right;
+}
+
+
+html[dir="rtl"] nav {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .nav-link {
+  text-align: right;
+}
+
+
+/* Flex rows naturally mirror in RTL */
+
+html[dir="rtl"] header,
+html[dir="rtl"] footer {
+  direction: rtl;
+}
+
+
+/* =========================================================
+   Staff Portal
+   ========================================================= */
+
+.portal-shell {
+  display: flex;
+
+  min-height: 100vh;
+
+  background: #f4f6f5;
+  color: #171717;
+}
+
+
+.portal-sidebar {
+  position: sticky;
+  top: 0;
+
+  height: 100vh;
+  width: 248px;
+
+  flex-shrink: 0;
+
+  background: #171717;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.portal-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 22px;
+
+  border-bottom: 1px solid #ffffff18;
+
+  font-weight: 750;
+  font-size: 20px;
+}
+
+
+.portal-brand img {
+  border-radius: 9px;
+
+  background: white;
+}
+
+
+.portal-brand small,
+.portal-sidebar-bottom small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #ffffff80;
+
+  font-size: 11px;
+  font-weight: 400;
+}
+
+
+.portal-sidebar nav {
+  display: grid;
+
+  gap: 7px;
+
+  padding: 24px 12px;
+}
+
+
+.portal-sidebar nav a {
+  padding: 12px 16px;
+
+  border-radius: 8px;
+
+  color: #ffffffb8;
+
+  font-size: 14px;
+}
+
+
+.portal-sidebar nav a:hover {
+  background: #ffffff0c;
+}
+
+
+.portal-sidebar nav a[aria-current] {
+  background: #ed1c24;
+
+  color: white;
+}
+
+
+.portal-sidebar-bottom {
+  display: grid;
+
+  gap: 16px;
+
+  margin-top: auto;
+
+  padding: 22px;
+
+  border-top: 1px solid #ffffff18;
+
+  font-size: 13px;
+}
+
+
+.portal-sidebar-bottom button {
+  color: #fca5a5;
+
+  text-align: start;
+}
+
+
+.portal-sidebar-bottom > a {
+  color: #ffffff90;
+
+  font-size: 12px;
+}
+
+
+.portal-workspace {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.portal-topbar {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 0 32px;
+
+  background: white;
+
+  border-bottom: 1px solid #e5e7e6;
+
+  font-size: 14px;
+}
+
+
+.portal-topbar > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+}
+
+
+.portal-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 100%;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.portal-content {
+  max-width: 1450px;
+
+  margin: auto;
+
+  padding: 32px;
+}
+
+
+.portal-heading {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  margin: 0 0 26px;
+}
+
+
+.portal-heading h1 {
+  margin-bottom: 6px;
+
+  font-size: 26px;
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
+}
+
+
+html[lang="ar"] .portal-heading h1 {
+  letter-spacing: 0;
+}
+
+
+.portal-heading p {
+  color: #66706b;
+
+  font-size: 14px;
+}
+
+
+.portal-heading .portal-eyebrow {
+  margin-bottom: 7px;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+
+html[lang="ar"] .portal-heading .portal-eyebrow {
+  letter-spacing: 0;
+}
+
+
+.portal-card {
+  margin-bottom: 24px;
+
+  padding: 24px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 12px;
+
+  background: white;
+
+  box-shadow: 0 1px 2px #17171703;
+}
+
+
+.portal-card h2 {
+  margin-bottom: 18px;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+.portal-kpis {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+
+.portal-kpis p {
+  margin: 12px 0 7px;
+
+  color: #66706b;
+
+  font-size: 13px;
+}
+
+
+.portal-kpis strong {
+  font-size: 32px;
+
+  line-height: 1.3;
+}
+
+
+.portal-dot {
+  display: block;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 100%;
+
+  background: #e5e7eb;
+}
+
+
+.portal-dot.ACTIVE {
+  background: #ed1c24;
+}
+
+
+.portal-dot.COMPLETED {
+  background: #00a651;
+}
+
+
+.portal-dot.PENDING {
+  background: #d97706;
+}
+
+
+.portal-badge {
+  display: inline-flex;
+
+  padding: 4px 9px;
+
+  border-radius: 6px;
+
+  background: #f3f4f6;
+
+  color: #66706b;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.portal-badge.ACTIVE,
+.portal-badge.ON_MISSION {
+  background: #eff4fe;
+
+  color: #1d4ed8;
+}
+
+
+.portal-badge.COMPLETED,
+.portal-badge.AVAILABLE {
+  background: #ecfdf3;
+
+  color: #007a3d;
+}
+
+
+.portal-badge.PENDING,
+.portal-badge.MAINTENANCE {
+  background: #fef6e7;
+
+  color: #92530a;
+}
+
+
+.portal-badge.CANCELLED {
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+
+.portal-recent {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 16px 0;
+
+  border-top: 1px solid #f0f1f0;
+
+  font-size: 13px;
+}
+
+
+.portal-recent small,
+.portal-table small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+
+.portal-table-wrap {
+  overflow-x: auto;
+}
+
+
+.portal-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 13px;
+}
+
+
+.portal-table th {
+  padding: 13px 12px;
+
+  background: #f7f8f7;
+
+  color: #66706b;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: start;
+
+  white-space: nowrap;
+}
+
+
+.portal-table td {
+  padding: 15px 12px;
+
+  border-bottom: 1px solid #eef0ef;
+
+  vertical-align: middle;
+
+  text-align: start;
+}
+
+
+.portal-table td > a {
+  color: #b91c1c;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+
+.portal-table pre {
+  max-width: 360px;
+
+  overflow-wrap: anywhere;
+
+  font-size: 11px;
+
+  white-space: pre-wrap;
+}
+
+
+.portal-filters {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  align-items: end;
+}
+
+
+.portal-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  margin-bottom: 20px;
+
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #303633;
+  text-align: start;
+}
+
+
+.portal-field input,
+.portal-field select,
+.portal-field textarea {
+  width: 100%;
+
+  min-height: 50px;
+  min-width: 0;
+  max-width: 100%;
+
+  padding: 12px 16px;
+
+  border: 1px solid #dde4e0;
+  border-radius: 12px;
+
+  background: #f7f9f8;
+
+  color: #222725;
+
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  text-align: start;
+  outline: none;
+  transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+}
+
+.portal-field :is(input, textarea)::placeholder {
+  color: #9aa39f;
+}
+
+.portal-field :is(input, select, textarea):hover:not(:focus):not(:disabled) {
+  border-color: #cbd5d0;
+}
+
+
+.portal-field textarea {
+  min-height: 90px;
+
+  resize: vertical;
+}
+
+
+.portal-field input:focus,
+.portal-field select:focus,
+.portal-field textarea:focus {
+  border-color: var(--ima-red);
+  background: white;
+  box-shadow: 0 0 0 4px rgb(239 68 68 / 5%);
+}
+
+
+.portal-field input:disabled,
+.portal-field select:disabled,
+.portal-field textarea:disabled {
+  background: #f7f8f7;
+
+  color: #5b625e;
+}
+
+
+.portal-form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 0 20px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+}
+
+
+.portal-full {
+  grid-column: 1 / -1;
+}
+
+
+.portal-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  margin-top: 16px;
+}
+
+
+.portal-crew {
+  margin: 10px 0;
+
+  padding: 20px 0;
+
+  border-top: 1px solid #e5e7e6;
+}
+
+
+.portal-crew legend,
+.portal-crew h2 {
+  margin-bottom: 14px;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+
+.portal-crew-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.portal-crew-row .portal-field {
+  flex: 1;
+}
+
+
+.portal-notice {
+  margin: 12px 0 20px;
+
+  padding: 12px 15px;
+
+  border-inline-start: 3px solid #d7ddda;
+
+  background: #f7f8f7;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+
+.portal-back {
+  display: inline-block;
+
+  margin-bottom: 22px;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+
+.portal-meta {
+  display: flex;
+
+  gap: 24px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 24px;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+
+.portal-audit {
+  padding: 16px 0;
+
+  border-top: 1px solid #e5e7e6;
+
+  overflow-x: auto;
+
+  font-size: 12px;
+}
+
+
+.portal-audit summary {
+  cursor: pointer;
+}
+
+
+.portal-error {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+
+  padding: 16px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+
+.portal-error button {
+  font-size: 20px;
+}
+
+
+.portal-loading {
+  min-height: 50vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+}
+
+
+.portal-empty {
+  padding: 40px 12px;
+
+  color: #66706b;
+
+  text-align: center;
+}
+
+
+.portal-empty p {
+  font-size: 13px;
+}
+
+
+.portal-mobile-toggle {
+  display: none;
+}
+
+
+.portal-overlay {
+  display: none;
+}
+
+
+.button-danger {
+  background: #b91c1c;
+
+  color: white;
+}
+
+
+.button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+
+/* =========================================================
+   Portal RTL
+   ========================================================= */
+
+html[dir="rtl"] .portal-shell,
+html[dir="rtl"] .portal-workspace,
+html[dir="rtl"] .portal-content {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-sidebar {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-brand {
+  direction: rtl;
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-sidebar nav a,
+html[dir="rtl"] .portal-sidebar-bottom {
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-topbar {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-topbar > div {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-heading {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-heading h1,
+html[dir="rtl"] .portal-heading p,
+html[dir="rtl"] .portal-heading .portal-eyebrow {
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-card {
+  direction: rtl;
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-card h2 {
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-recent {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-meta {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-buttons {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-field {
+  text-align: right;
+}
+
+
+html[dir="rtl"] .portal-table {
+  direction: rtl;
+}
+
+
+html[dir="rtl"] .portal-table th,
+html[dir="rtl"] .portal-table td {
+  text-align: right;
+}
+
+
+/* =========================================================
+   Filter Alignment
+   ========================================================= */
+
+.portal-filters > .portal-field {
+  margin-bottom: 0;
+}
+
+
+.portal-filters > .portal-buttons {
+  align-self: end;
+
+  gap: 8px;
+
+  margin-top: 0;
+}
+
+
+.portal-filters .portal-field input,
+.portal-filters .portal-field select,
+.portal-filters .button {
+  min-height: 44px;
+}
+
+
+.portal-filters .button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   Table Alignment
+   ========================================================= */
+
+.portal-table .portal-buttons {
+  align-items: center;
+
+  margin-top: 0;
+}
+
+
+.portal-table td > b {
+  display: block;
+
+  line-height: 1.4;
+}
+
+
+.portal-table td > small {
+  display: block;
+
+  margin-top: 4px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .portal-filters {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .portal-content {
+    padding: 24px;
+  }
+
+
+  .portal-kpis {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 760px) {
+  .portal-sidebar {
+    position: fixed;
+
+    z-index: 60;
+
+    inset-inline-start: 0;
+
+    transform: translateX(-100%);
+
+    transition: transform 0.2s;
+  }
+
+
+  html[dir="rtl"] .portal-sidebar {
+    transform: translateX(100%);
+  }
+
+
+  .portal-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+
+  html[dir="rtl"] .portal-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+
+  .portal-mobile-toggle {
+    display: block;
+  }
+
+
+  .portal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 55;
+
+    display: block;
+
+    background: #0007;
+  }
+
+
+  .portal-topbar {
+    padding: 0 18px;
+  }
+
+
+  .portal-content {
+    padding: 20px 14px;
+  }
+
+
+  .portal-card {
+    padding: 18px;
+  }
+
+
+  .portal-heading h1 {
+    font-size: 22px;
+  }
+
+
+  .portal-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .portal-crew-row {
+    flex-wrap: wrap;
+  }
+
+
+  .portal-crew-row .portal-field {
+    min-width: 130px;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .portal-filters {
+    grid-template-columns: 1fr;
+  }
+
+
+  .portal-filters > .portal-buttons {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .portal-filters .button {
+    width: 100%;
+  }
+}
+
+/* Shared form surfaces mirror the public contact/volunteer form design.
+   Only cards containing fields are themed; data tables and dashboards stay unchanged. */
+.portal-card:has(.portal-field) {
+  padding: 32px;
+  border-color: #e3e9e6;
+  border-inline-start: 4px solid var(--ima-red);
+  border-radius: 16px;
+  background: #fcfdfc;
+  box-shadow: 0 8px 30px rgb(23 23 23 / 4%);
+  text-align: start;
+}
+
+.portal-card:has(.portal-field) .button {
+  min-height: 46px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: normal;
+}
+
+.portal-card:has(.portal-field) .button-primary {
+  background: var(--ima-red);
+  color: white;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+.portal-card:has(.portal-field) .button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.portal-filters .portal-field :is(input, select) {
+  min-height: 50px;
+}
+
+.portal-card.portal-filters .button {
+  min-height: 50px;
+}
+
+.portal-field input[dir="ltr"] {
+  direction: ltr;
+  text-align: start;
+}
+
+@media (max-width: 639px) {
+  .portal-card:has(.portal-field) {
+    padding: 24px;
+  }
+
+  .portal-card:has(.portal-field) .portal-buttons > .button {
+    max-width: 100%;
+  }
+}
+
+/* =========================================================
+   Missions List Polish
+   ========================================================= */
+
+/* Keep the mission filter card compact */
+.portal-card.portal-filters {
+  padding: 22px 24px;
+  border-inline-start: 4px solid var(--ima-red);
+  border-radius: 14px;
+  background: #fcfdfc;
+}
+
+/* Slightly tighter filter grid */
+.portal-card.portal-filters {
+  gap: 14px 16px;
+}
+
+/* Smaller labels inside filters */
+.portal-card.portal-filters .portal-field {
+  gap: 6px;
+  font-size: 13px;
+}
+
+/* Make filter fields less tall */
+.portal-card.portal-filters .portal-field input,
+.portal-card.portal-filters .portal-field select {
+  min-height: 44px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* Keep filter action buttons aligned with fields */
+.portal-card.portal-filters > .portal-buttons {
+  align-self: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+}
+
+/* Match button height to inputs */
+.portal-card.portal-filters .button {
+  min-height: 44px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* Missions table card */
+.portal-card.portal-table-wrap {
+  padding: 20px 22px;
+}
+
+/* Cleaner table header */
+.portal-table th {
+  padding: 12px 12px;
+  background: #f6f8f7;
+  color: #5f6a65;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+/* Slightly more comfortable mission rows */
+.portal-table td {
+  padding: 14px 12px;
+}
+
+/* Mission number links */
+.portal-table td > a {
+  color: var(--ima-red-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.portal-table td > a:hover {
+  color: var(--ima-red);
+  text-decoration: underline;
+}
+
+/* New Mission button */
+.portal-heading > .button-primary {
+  min-height: 42px;
+  padding-inline: 16px;
+  border-radius: 10px;
+}
+
+/* Pagination spacing */
+.portal-table-wrap + .portal-buttons {
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+  .portal-card.portal-filters {
+    padding: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .portal-card.portal-filters {
+    padding: 18px;
+  }
+
+  .portal-card.portal-filters > .portal-buttons {
+    width: 100%;
+  }
+
+  .portal-card.portal-filters .button {
+    width: 100%;
+  }
+
+  .portal-card.portal-table-wrap {
+    padding: 14px;
+  }
+}
+
+/* =========================================================
+   Mission Form Polish
+   ========================================================= */
+
+.portal-card .portal-form-grid .portal-field {
+  margin-bottom: 16px;
+}
+
+.portal-card .portal-crew {
+  margin-top: 4px;
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+
+.portal-card .portal-crew > button {
+  margin-top: 4px;
+}
+
+.portal-card > .portal-buttons:last-child {
+  margin-top: 18px;
+}
+
+/* Slightly reduce large form textarea height */
+.portal-card .portal-field textarea[name="notes"] {
+  min-height: 110px;
+}
+
+/* Keep mission form actions visually compact */
+.portal-card > .portal-buttons .button {
+  min-width: 96px;
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .portal-card .portal-form-grid .portal-field {
+    margin-bottom: 14px;
+  }
+
+  .portal-card .portal-field textarea[name="notes"] {
+    min-height: 100px;
+  }
+}
+
+/* =========================================================
+   Mission Detail Polish
+   ========================================================= */
+
+.portal-heading .button-primary:last-child {
+  box-shadow: none;
+}
+
+/* Softer admin correction action */
+.portal-heading .button-primary {
+  border-radius: 10px;
+}
+
+/* Closed-record notice */
+.portal-notice {
+  border-inline-start-color: #cbd5d0;
+  background: #f8faf9;
+}
+
+/* Crew sections */
+.portal-crew {
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+
+.portal-crew h2 {
+  margin-bottom: 10px;
+}
+
+.portal-crew p {
+  margin-bottom: 4px;
+}
+
+/* Audit history */
+.portal-audit {
+  padding: 18px 0;
+}
+
+.portal-audit summary {
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+.portal-audit summary:hover {
+  color: var(--ima-red-dark);
+}
+
+.portal-heading .button-primary {
+  background: white;
+  color: var(--ima-red-dark);
+  border: 1px solid #f1b8ba;
+  box-shadow: none;
+}
+
+.portal-heading .button-primary:hover {
+  background: var(--ima-red-light);
+  color: var(--ima-red-dark);
+}
+
+/* =========================================================
+   Staff Activity Polish
+   ========================================================= */
+
+/* Two-column cards */
+.activity-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+/* KPI cards */
+.activity-stats:first-of-type .portal-card {
+  padding: 22px;
+}
+
+.activity-total {
+  display: block;
+  margin-top: 6px;
+  color: var(--ima-red);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Monthly + incident breakdowns */
+.activity-breakdown {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-breakdown li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+}
+
+.activity-breakdown li + li {
+  border-top: 1px solid #eef0ef;
+}
+
+.activity-breakdown li span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.activity-breakdown li strong {
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+/* Mission links */
+.activity-mission-link {
+  color: var(--ima-red-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.activity-mission-link:hover {
+  color: var(--ima-red);
+  text-decoration: underline;
+}
+
+/* Activity history table */
+.portal-table-wrap .activity-mission-link {
+  white-space: nowrap;
+}
+
+.portal-table-wrap .portal-table td {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+/* Keep filter bar compact */
+.portal-card.portal-filters {
+  align-items: end;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .activity-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .activity-stats {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .activity-total {
+    font-size: 26px;
+  }
+}
+
+/* =========================================================
+   Equipment Inventory Polish
+   ========================================================= */
+
+.equipment-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+/* Base KPI card */
+.equipment-kpi {
+  padding: 18px 20px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.equipment-kpi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgb(23 23 23 / 5%);
+}
+
+.equipment-kpi span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #66706b;
+}
+
+.equipment-kpi strong {
+  display: block;
+
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 750;
+
+  color: #171717;
+}
+
+/* =========================================================
+   Total Equipment
+   ========================================================= */
+
+.equipment-kpi:not(.available):not(.loan):not(.maintenance) {
+  border-color: #dfe4e1;
+
+  background: #f7f9f8;
+}
+
+.equipment-kpi:not(.available):not(.loan):not(.maintenance)
+  span {
+  color: #5f6964;
+}
+
+.equipment-kpi:not(.available):not(.loan):not(.maintenance)
+  strong {
+  color: #303633;
+}
+
+/* =========================================================
+   Available
+   ========================================================= */
+
+.equipment-kpi.available {
+  border-color: #b7e7cb;
+
+  background: #ecfdf3;
+}
+
+.equipment-kpi.available span {
+  color: #007a3d;
+}
+
+.equipment-kpi.available strong {
+  color: #007a3d;
+}
+
+/* =========================================================
+   On Loan
+   ========================================================= */
+
+.equipment-kpi.loan {
+  border-color: #bfdbfe;
+
+  background: #eff6ff;
+}
+
+.equipment-kpi.loan span {
+  color: #1d4ed8;
+}
+
+.equipment-kpi.loan strong {
+  color: #1d4ed8;
+}
+
+/* =========================================================
+   Maintenance
+   ========================================================= */
+
+.equipment-kpi.maintenance {
+  border-color: #f7d79a;
+
+  background: #fff8e8;
+}
+
+.equipment-kpi.maintenance span {
+  color: #a85a08;
+}
+
+.equipment-kpi.maintenance strong {
+  color: #b45309;
+}
+
+/* =========================================================
+   Equipment Form
+   ========================================================= */
+
+.equipment-form {
+  margin-bottom: 24px;
+}
+
+.equipment-form .portal-field {
+  margin-bottom: 14px;
+}
+
+.equipment-form textarea {
+  min-height: 100px;
+}
+
+.equipment-form .portal-buttons {
+  margin-top: 14px;
+
+  justify-content: flex-end;
+}
+
+/* =========================================================
+   Equipment Filters
+   ========================================================= */
+
+.equipment-filters {
+  padding: 22px 24px;
+
+  margin-bottom: 20px;
+}
+
+.equipment-filters .portal-field {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   Equipment Table
+   ========================================================= */
+
+.equipment-table {
+  overflow: hidden;
+}
+
+.equipment-table .portal-table td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.equipment-table .portal-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.equipment-table .portal-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+/* Code column */
+.equipment-table .portal-table td > b {
+  color: #171717;
+
+  font-weight: 700;
+}
+
+/* Secondary information */
+.equipment-table .portal-table small {
+  color: #7a837f;
+}
+
+/* Edit button */
+.equipment-table .button-secondary {
+  min-height: 38px;
+
+  padding-inline: 14px;
+
+  color: #303633;
+
+  border-color: #dde3e0;
+
+  background: #ffffff;
+}
+
+.equipment-table .button-secondary:hover {
+  color: var(--ima-red-dark);
+
+  border-color: #f1b8ba;
+
+  background: var(--ima-red-light);
+}
+
+/* =========================================================
+   Equipment Status Badges
+   ========================================================= */
+
+.equipment-table .portal-badge.AVAILABLE {
+  background: #ecfdf3;
+  color: #007a3d;
+}
+
+.equipment-table .portal-badge.ON_LOAN {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.equipment-table .portal-badge.MAINTENANCE {
+  background: #fff8e8;
+  color: #a85a08;
+}
+
+.equipment-table .portal-badge.RETIRED {
+  background: #f3f4f6;
+  color: #66706b;
+}
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+html[dir="rtl"] .equipment-kpi,
+html[dir="rtl"] .equipment-filters,
+html[dir="rtl"] .equipment-table {
+  text-align: right;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .equipment-kpis {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .equipment-kpis {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .equipment-kpi {
+    padding: 16px 18px;
+  }
+
+  .equipment-kpi strong {
+    font-size: 24px;
+  }
+
+  .equipment-filters {
+    padding: 18px;
+  }
+}
+.vehicle-issues-heading .button-primary {
+  background: var(--ima-red);
+  color: white;
+  border-color: var(--ima-red);
+}
+
+.vehicle-issues-heading .button-primary:hover {
+  background: var(--ima-red-dark);
+}
+
+/* =========================================================
+   Vehicle Issues / Maintenance Polish
+   ========================================================= */
+
+.vehicle-issues-heading .vehicle-issue-primary-action {
+  background: var(--ima-red);
+  color: #fff;
+  border-color: var(--ima-red);
+}
+
+.vehicle-issues-heading .vehicle-issue-primary-action:hover {
+  background: var(--ima-red-dark);
+  color: #fff;
+  border-color: var(--ima-red-dark);
+}
+
+/* KPI cards */
+
+.vehicle-issue-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vehicle-issue-kpi {
+  display: flex;
+  min-height: 110px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 20px;
+
+  border: 1px solid;
+  border-radius: 14px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 14px rgb(0 0 0 / 2.5%);
+}
+
+.vehicle-issue-kpi span {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.vehicle-issue-kpi strong {
+  font-size: 34px;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.vehicle-issue-kpi.open {
+  border-color: #fb7185;
+  background: #ffe4e6;
+}
+
+.vehicle-issue-kpi.open span {
+  color: #e11d48;
+}
+
+.vehicle-issue-kpi.open strong {
+  color: #be123c;
+}
+
+.vehicle-issue-kpi.maintenance {
+  border-color: #fb923c;
+  background: #ffedd5;
+}
+
+.vehicle-issue-kpi.maintenance span {
+  color: #ea580c;
+}
+
+.vehicle-issue-kpi.maintenance strong {
+  color: #c2410c;
+}
+
+.vehicle-issue-kpi.resolved {
+  border-color: #4ade80;
+  background: #dcfce7;
+}
+
+.vehicle-issue-kpi.resolved span {
+  color: #16a34a;
+}
+
+.vehicle-issue-kpi.resolved strong {
+  color: #15803d;
+}
+
+/* Badges */
+
+.vehicle-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+.vehicle-status-open {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.vehicle-status-maintenance {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.vehicle-status-resolved {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.vehicle-severity-low {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.vehicle-severity-medium {
+  background: #fef6e7;
+  color: #a85a08;
+}
+
+.vehicle-severity-high {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.vehicle-severity-critical {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Filters */
+
+.vehicle-issue-filters {
+  margin-bottom: 24px;
+}
+
+/* Table */
+
+.vehicle-issue-table {
+  overflow: hidden;
+}
+
+.vehicle-issue-table .portal-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.vehicle-issue-table .portal-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+.vehicle-issue-link {
+  color: var(--ima-red-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.vehicle-issue-link:hover {
+  color: var(--ima-red);
+  text-decoration: underline;
+}
+
+/* Detail */
+
+.vehicle-issue-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 22px;
+
+  flex-wrap: wrap;
+}
+
+.vehicle-issue-details > div {
+  padding: 4px 0 16px;
+}
+
+.vehicle-issue-details dt {
+  margin-bottom: 5px;
+
+  color: #66706b;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vehicle-issue-details dd {
+  margin: 0;
+
+  color: #171717;
+
+  font-size: 14px;
+}
+
+.vehicle-maintenance-card textarea {
+  min-height: 110px;
+}
+
+.vehicle-save-message {
+  margin-bottom: 18px;
+
+  color: var(--ima-green-dark);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vehicle-issue-pagination {
+  justify-content: center;
+
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+/* RTL */
+
+html[dir="rtl"] .vehicle-issue-kpi,
+html[dir="rtl"] .vehicle-issue-details {
+  text-align: right;
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+  .vehicle-issue-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vehicle-issue-kpi {
+    min-height: 92px;
+  }
+}
+
+/* =========================================================
+   Vehicle Issue Form Polish
+   ========================================================= */
+
+.vehicle-issue-form {
+  max-width: 100%;
+}
+
+.vehicle-issue-form .portal-form-grid {
+  gap: 0 22px;
+}
+
+.vehicle-issue-form .portal-field {
+  margin-bottom: 16px;
+}
+
+.vehicle-issue-form textarea[name="description"] {
+  min-height: 130px;
+}
+
+.vehicle-issue-form-actions {
+  margin-top: 4px;
+  padding-top: 6px;
+}
+
+.vehicle-issue-form-actions .button-primary {
+  min-width: 180px;
+  min-height: 46px;
+
+  border-radius: 10px;
+
+  background: var(--ima-red);
+  color: #fff;
+}
+
+.vehicle-issue-form-actions .button-primary:hover {
+  background: var(--ima-red-dark);
+}
+
+@media (max-width: 760px) {
+  .vehicle-issue-form textarea[name="description"] {
+    min-height: 110px;
+  }
+
+  .vehicle-issue-form-actions .button-primary {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   Vehicle Issue Detail Polish
+   ========================================================= */
+
+.vehicle-issue-detail-card {
+  padding: 24px 26px;
+}
+
+.vehicle-issue-details {
+  gap: 0 28px;
+}
+
+.vehicle-issue-details > div {
+  padding: 4px 0 14px;
+}
+
+.vehicle-issue-details dt {
+  margin-bottom: 5px;
+
+  color: #66706b;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vehicle-issue-details dd {
+  margin: 0;
+
+  color: #171717;
+
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.vehicle-maintenance-card {
+  padding: 22px 24px;
+}
+
+.vehicle-maintenance-card h2 {
+  margin-bottom: 12px;
+}
+
+.vehicle-maintenance-card p {
+  margin-bottom: 16px;
+
+  line-height: 1.6;
+}
+
+.vehicle-audit-card {
+  padding: 22px 24px;
+}
+
+.vehicle-audit-card .portal-audit {
+  padding: 14px 0;
+
+  transition: background-color 120ms ease;
+}
+
+.vehicle-audit-card .portal-audit:hover {
+  background: #fafbfa;
+}
+
+.vehicle-audit-card .portal-audit[open] {
+  background: #fafbfa;
+}
+
+.vehicle-audit-card .portal-audit summary {
+  font-weight: 500;
+}
+
+@media (max-width: 760px) {
+  .vehicle-issue-detail-card,
+  .vehicle-maintenance-card,
+  .vehicle-audit-card {
+    padding: 18px;
+  }
+}
+
+/* =========================================================
+   Vehicle Issue Record
+   ========================================================= */
+
+.vehicle-record-card {
+  padding: 28px;
+}
+
+.vehicle-record-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.vehicle-record-badges {
+  display: flex;
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+.vehicle-record-vehicle {
+  margin: 0 0 5px;
+
+  font-size: 20px;
+}
+
+.vehicle-record-vehicle span {
+  color: #66706b;
+
+  font-weight: 500;
+}
+
+.vehicle-record-category {
+  margin: 0;
+
+  color: #66706b;
+
+  font-size: 13px;
+}
+
+/* Meta information */
+
+.vehicle-record-meta {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 24px;
+  padding: 18px 0;
+
+  border-top: 1px solid #eef0ef;
+  border-bottom: 1px solid #eef0ef;
+}
+
+.vehicle-record-meta > div {
+  display: grid;
+
+  gap: 5px;
+}
+
+.vehicle-record-meta span {
+  color: #7a837f;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.vehicle-record-meta strong {
+  color: #171717;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Description */
+
+.vehicle-record-description {
+  padding: 18px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 10px;
+
+  background: #f8faf9;
+}
+
+.vehicle-record-description > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #66706b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.vehicle-record-description p {
+  margin: 0;
+
+  line-height: 1.65;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   Resolution Card
+   ========================================================= */
+
+.vehicle-resolution-card {
+  padding: 24px;
+}
+
+.vehicle-resolution-header {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.vehicle-resolution-icon {
+  display: grid;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #ecfdf3;
+
+  color: #15803d;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.vehicle-resolution-header h2 {
+  margin: 0 0 3px;
+}
+
+.vehicle-resolution-header p {
+  margin: 0;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+.vehicle-resolution-notes {
+  padding: 16px 18px;
+
+  border-radius: 10px;
+
+  background: #f8faf9;
+}
+
+.vehicle-resolution-notes > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #66706b;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vehicle-resolution-notes p {
+  margin: 0;
+
+  line-height: 1.6;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   Audit Timeline
+   ========================================================= */
+
+.vehicle-timeline-card {
+  padding: 24px 28px;
+}
+
+.vehicle-timeline {
+  display: grid;
+
+  margin-top: 6px;
+}
+
+.vehicle-timeline-item {
+  display: grid;
+
+  grid-template-columns: 22px 1fr;
+
+  gap: 14px;
+}
+
+.vehicle-timeline-marker {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vehicle-timeline-marker span {
+  position: relative;
+  z-index: 2;
+
+  width: 10px;
+  height: 10px;
+
+  margin-top: 6px;
+
+  border: 2px solid #fff;
+  border-radius: 50%;
+
+  background: var(--ima-red);
+
+  box-shadow:
+    0 0 0 2px #f5b5b7;
+}
+
+.vehicle-timeline-marker i {
+  width: 1px;
+  min-height: 70px;
+
+  flex: 1;
+
+  margin-top: 3px;
+
+  background: #e5e7e6;
+}
+
+.vehicle-timeline-content {
+  padding-bottom: 24px;
+}
+
+.vehicle-timeline-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.vehicle-timeline-heading strong {
+  font-size: 13px;
+}
+
+.vehicle-timeline-heading time {
+  color: #7a837f;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.vehicle-timeline-content > p {
+  margin: 4px 0 0;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+.vehicle-timeline-details {
+  margin-top: 12px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  background: #fafbfa;
+}
+
+.vehicle-timeline-details summary {
+  padding: 10px 12px;
+
+  cursor: pointer;
+
+  color: var(--ima-red-dark);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .vehicle-record-meta {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .vehicle-record-card,
+  .vehicle-resolution-card,
+  .vehicle-timeline-card {
+    padding: 18px;
+  }
+
+  .vehicle-record-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-timeline-heading {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 3px;
+  }
+}
+
+/* =========================================================
+   Final Vehicle Detail Polish
+   ========================================================= */
+
+.vehicle-issues-heading {
+  margin-bottom: 20px;
+}
+
+.vehicle-record-description > span {
+  font-size: 12px;
+  color: #59635e;
+}
+
+.vehicle-resolution-notes {
+  border: 1px solid #d8eee0;
+  border-inline-start: 3px solid #22a861;
+}
+
+.vehicle-timeline-details {
+  margin-top: 9px;
+}
+
+.vehicle-timeline-details summary {
+  padding: 9px 12px;
+}
+
+.vehicle-timeline-content {
+  padding-bottom: 20px;
+}
+
+/* =========================================================
+   Lending Polish
+   ========================================================= */
+
+.lending-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.lending-kpi {
+  padding: 18px 20px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.lending-kpi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgb(23 23 23 / 5%);
+}
+
+.lending-kpi span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lending-kpi strong {
+  display: block;
+
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 750;
+}
+
+/* Total */
+.lending-kpi.total {
+  border-color: #dfe4e1;
+  background: #f7f9f8;
+}
+
+.lending-kpi.total span {
+  color: #5f6964;
+}
+
+.lending-kpi.total strong {
+  color: #303633;
+}
+
+/* Available */
+.lending-kpi.available {
+  border-color: #b7e7cb;
+  background: #ecfdf3;
+}
+
+.lending-kpi.available span,
+.lending-kpi.available strong {
+  color: #007a3d;
+}
+
+/* On loan */
+.lending-kpi.loan {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.lending-kpi.loan span,
+.lending-kpi.loan strong {
+  color: #1d4ed8;
+}
+
+/* Overdue */
+.lending-kpi.overdue {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.lending-kpi.overdue span,
+.lending-kpi.overdue strong {
+  color: #b91c1c;
+}
+
+/* Primary checkout button */
+.lending-heading .button-primary {
+  background: var(--ima-red);
+  color: #fff;
+  border-color: var(--ima-red);
+}
+
+.lending-heading .button-primary:hover {
+  background: var(--ima-red-dark);
+  border-color: var(--ima-red-dark);
+  color: #fff;
+}
+
+/* Table */
+.lending-table {
+  overflow: hidden;
+}
+
+.lending-table .portal-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.lending-table .portal-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+/* Lending status badges */
+.lending-status-active {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.lending-status-overdue {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.lending-status-returned {
+  background: #f3f4f6;
+  color: #66706b;
+}
+
+/* Completed action pill */
+.lending-completed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 6px 14px;
+
+  border: 1px solid #4ade80;
+  border-radius: 999px;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1050px) {
+  .lending-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .lending-kpis {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* =========================================================
+   Lending Filters
+   ========================================================= */
+
+.lending-filters {
+  padding: 22px 24px;
+
+  margin-bottom: 20px;
+
+  border-inline-start: 4px solid var(--ima-red);
+  border-radius: 14px;
+
+  background: #fcfdfc;
+
+  box-shadow:
+    0 8px 24px rgb(23 23 23 / 3%);
+}
+
+.lending-filters .portal-field {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   Lending Table
+   ========================================================= */
+
+.lending-table {
+  overflow: hidden;
+
+  padding: 20px 22px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 24px rgb(23 23 23 / 3%);
+}
+
+.lending-table .portal-table {
+  width: 100%;
+}
+
+.lending-table .portal-table th {
+  background: #f6f8f7;
+}
+
+.lending-table .portal-table td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.lending-table .portal-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.lending-table .portal-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+.lending-table .portal-table td > b {
+  color: #171717;
+
+  font-weight: 700;
+}
+
+.lending-table .portal-table small {
+  color: #737d78;
+}
+
+/* Final Lending layout polish */
+
+.lending-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+
+  padding: 22px 24px;
+}
+
+.lending-filters .portal-field {
+  width: 100%;
+}
+
+.lending-filters input,
+.lending-filters select {
+  width: 100%;
+}
+
+.lending-table {
+  padding: 18px 20px;
+}
+
+@media (max-width: 700px) {
+  .lending-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   Submissions UI Polish
+   ========================================================= */
+
+/* KPI cards */
+
+.submission-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.submission-kpi {
+  padding: 18px 20px;
+
+  border: 1px solid;
+  border-radius: 12px;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.submission-kpi:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 18px rgb(23 23 23 / 5%);
+}
+
+.submission-kpi span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.submission-kpi strong {
+  display: block;
+
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 750;
+}
+
+/* New */
+
+.submission-kpi.new {
+  border-color: #bfdbfe;
+
+  background: #eff6ff;
+}
+
+.submission-kpi.new span,
+.submission-kpi.new strong {
+  color: #1d4ed8;
+}
+
+/* Reviewed */
+
+.submission-kpi.reviewed {
+  border-color: #f7d79a;
+
+  background: #fff8e8;
+}
+
+.submission-kpi.reviewed span,
+.submission-kpi.reviewed strong {
+  color: #a85a08;
+}
+
+/* Closed */
+
+.submission-kpi.closed {
+  border-color: #b7e7cb;
+
+  background: #ecfdf3;
+}
+
+.submission-kpi.closed span,
+.submission-kpi.closed strong {
+  color: #007a3d;
+}
+
+/* =========================================================
+   Control card
+   ========================================================= */
+
+.submissions-control-card {
+  padding: 20px 26px;
+
+  margin-bottom: 20px;
+
+  border-inline-start:
+    4px solid var(--ima-red);
+
+  background: #ffffff;
+}
+
+.submission-tabs {
+  display: inline-flex;
+
+  gap: 6px;
+
+  padding: 4px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid #e5e7e6;
+  border-radius: 12px;
+
+  background: #f7f8f7;
+}
+
+.submission-tab {
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #4f5954;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.submission-tab:hover {
+  color: #171717;
+}
+
+.submission-tab.active {
+  background: var(--ima-red);
+  color: #ffffff;
+
+  box-shadow:
+    0 3px 8px rgb(237 28 36 / 16%);
+}
+
+/* Filter */
+
+.submission-filter-row {
+  display: flex;
+  align-items: flex-end;
+
+  gap: 10px;
+}
+
+.submission-filter-row .portal-field {
+  width: min(320px, 100%);
+
+  margin-bottom: 0;
+}
+
+.submission-clear {
+  min-height: 44px;
+}
+
+/* =========================================================
+   Table card
+   ========================================================= */
+
+.submissions-table-card {
+  padding: 20px 22px;
+
+  overflow: hidden;
+}
+
+.submissions-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.submissions-table-heading h2 {
+  margin: 0;
+
+  font-size: 16px;
+}
+
+.submissions-table-heading > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 30px;
+  height: 30px;
+
+  padding-inline: 8px;
+
+  border-radius: 999px;
+
+  background: #f3f4f6;
+
+  color: #59635e;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.submissions-table-wrap {
+  overflow-x: auto;
+}
+
+.submissions-table {
+  width: 100%;
+}
+
+.submissions-table thead th {
+  background: #f6f8f7;
+}
+
+.submissions-table tbody tr {
+  transition:
+    background-color 120ms ease;
+}
+
+.submissions-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+.submissions-table td {
+  vertical-align: middle;
+}
+
+/* Name */
+
+.submission-name b {
+  color: #171717;
+
+  font-weight: 700;
+}
+
+/* Email / phone */
+
+.submission-contact-link {
+  color: var(--ima-red-dark);
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.submission-contact-link:hover {
+  color: var(--ima-red);
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Message */
+
+.submission-message {
+  max-width: 280px;
+}
+
+.submission-message span {
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* Date */
+
+.submission-date {
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Submission status
+   ========================================================= */
+
+.submission-status-cell {
+  display: grid;
+
+  gap: 5px;
+}
+
+.submission-status-cell small {
+  color: #737d78;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.submission-status-badge {
+  display: inline-flex;
+
+  width: fit-content;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 9px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.submission-status-badge.new {
+  background: #eff6ff;
+
+  color: #1d4ed8;
+}
+
+.submission-status-badge.reviewed {
+  background: #fff8e8;
+
+  color: #a85a08;
+}
+
+.submission-status-badge.closed {
+  background: #ecfdf3;
+
+  color: #007a3d;
+}
+
+/* =========================================================
+   Actions
+   ========================================================= */
+
+.submission-actions {
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+
+  gap: 7px;
+
+  min-width: 132px;
+}
+
+.submission-actions .button {
+  min-height: 36px;
+
+  padding: 7px 12px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.submission-action-secondary {
+  background: #ffffff;
+}
+
+.submission-close-button {
+  background: var(--ima-red);
+
+  color: #ffffff;
+
+  border-color: var(--ima-red);
+}
+
+.submission-close-button:hover {
+  background: var(--ima-red-dark);
+
+  border-color: var(--ima-red-dark);
+}
+
+/* Loading */
+
+.submissions-loading {
+  padding: 28px;
+}
+
+/* RTL */
+
+html[dir="rtl"] .submission-kpi,
+html[dir="rtl"] .submissions-table-card,
+html[dir="rtl"] .submissions-control-card {
+  text-align: right;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .submission-kpis {
+    grid-template-columns:
+      repeat(3, minmax(130px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .submission-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .submission-filter-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .submission-filter-row .portal-field {
+    width: 100%;
+  }
+
+  .submission-clear {
+    width: 100%;
+  }
+
+  .submission-tabs {
+    display: flex;
+
+    width: 100%;
+  }
+
+  .submission-tab {
+    flex: 1;
+  }
+
+  .submissions-table-card {
+    padding: 16px;
+  }
+}
+
+/* =========================================================
+   Staff Accounts UI Polish
+   ========================================================= */
+
+.staff-heading {
+  margin-bottom: 20px;
+}
+
+.staff-heading .button-primary {
+  min-height: 42px;
+  padding-inline: 18px;
+
+  border-color: var(--ima-red);
+  border-radius: 10px;
+
+  background: var(--ima-red);
+  color: #fff;
+}
+
+.staff-heading-hint:empty {
+  display: none;
+}
+
+/* =========================================================
+   Staff KPI Cards
+   ========================================================= */
+
+.staff-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.staff-kpi {
+  padding: 18px 20px;
+
+  border: 1px solid;
+  border-radius: 12px;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.staff-kpi:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 18px rgb(23 23 23 / 5%);
+}
+
+.staff-kpi span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.staff-kpi strong {
+  display: block;
+
+  font-size: 27px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+/* Total */
+
+.staff-kpi.total {
+  border-color: #dfe4e1;
+
+  background: #f7f9f8;
+}
+
+.staff-kpi.total span {
+  color: #5f6964;
+}
+
+.staff-kpi.total strong {
+  color: #303633;
+}
+
+/* Enabled */
+
+.staff-kpi.enabled {
+  border-color: #b7e7cb;
+
+  background: #ecfdf3;
+}
+
+.staff-kpi.enabled span,
+.staff-kpi.enabled strong {
+  color: #007a3d;
+}
+
+/* Disabled */
+
+.staff-kpi.disabled {
+  border-color: #fecaca;
+
+  background: #fef2f2;
+}
+
+.staff-kpi.disabled span,
+.staff-kpi.disabled strong {
+  color: #b91c1c;
+}
+
+/* Super admin */
+
+.staff-kpi.admin {
+  border-color: #ddd6fe;
+
+  background: #f5f3ff;
+}
+
+.staff-kpi.admin span,
+.staff-kpi.admin strong {
+  color: #6d28d9;
+}
+
+/* =========================================================
+   Staff Form
+   ========================================================= */
+
+.staff-form,
+.staff-password-card {
+  margin-bottom: 22px;
+
+  padding: 26px;
+
+  border-inline-start:
+    4px solid var(--ima-red);
+}
+
+.staff-form-heading {
+  margin-bottom: 20px;
+}
+
+.staff-form-heading > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--ima-red);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.staff-form-heading h2 {
+  margin: 0;
+
+  font-size: 19px;
+}
+
+.staff-form fieldset,
+.staff-password-card fieldset {
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+}
+
+.staff-active-checkbox {
+  align-self: center;
+
+  margin-top: 10px;
+}
+
+.staff-form-actions {
+  margin-top: 18px;
+}
+
+.staff-success {
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   Staff Table
+   ========================================================= */
+
+.staff-table-card {
+  padding: 20px 22px;
+
+  overflow: hidden;
+}
+
+.staff-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.staff-table-heading h2 {
+  margin: 0 0 3px;
+
+  font-size: 16px;
+}
+
+.staff-table-heading span {
+  color: #737d78;
+
+  font-size: 12px;
+}
+
+.staff-table tbody tr {
+  transition: background 120ms ease;
+}
+
+.staff-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+.staff-table td {
+  vertical-align: middle;
+}
+
+/* Identity */
+
+.staff-identity {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.staff-avatar-small {
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  color: var(--ima-red-dark);
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.staff-identity > div:last-child {
+  display: grid;
+
+  gap: 2px;
+}
+
+.staff-identity b {
+  color: #171717;
+}
+
+.staff-identity small {
+  color: #737d78;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   Role Badges
+   ========================================================= */
+
+.staff-role-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.staff-role-badge.super-admin {
+  background: #f5f3ff;
+
+  color: #6d28d9;
+}
+
+.staff-role-badge.operations-manager {
+  background: #eff6ff;
+
+  color: #1d4ed8;
+}
+
+.staff-role-badge.paramedic {
+  background: #ecfdf3;
+
+  color: #007a3d;
+}
+
+.staff-role-badge.lending-officer {
+  background: #fce7f3;
+
+  color: #9d174d;
+}
+
+.staff-role-badge.vehicle-manager {
+  background: #fff7ed;
+
+  color: #c2410c;
+}
+
+/* =========================================================
+   Enabled / Disabled
+   ========================================================= */
+
+.staff-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.staff-status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+.staff-status.enabled {
+  background: #ecfdf3;
+
+  color: #007a3d;
+}
+
+.staff-status.enabled .staff-status-dot {
+  background: #22c55e;
+}
+
+.staff-status.disabled {
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+.staff-status.disabled .staff-status-dot {
+  background: #ef4444;
+}
+
+/* =========================================================
+   Actions
+   ========================================================= */
+
+.staff-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.staff-actions .button {
+  min-height: 36px;
+
+  padding: 7px 13px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.staff-reset-button {
+  border-color: #f7d79a;
+
+  background: #fffdf7;
+
+  color: #a85a08;
+}
+
+.staff-reset-button:hover {
+  border-color: #efc36e;
+
+  background: #fff8e8;
+
+  color: #8b4a07;
+}
+
+/* =========================================================
+   Password Reset
+   ========================================================= */
+
+.staff-password-toggle {
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+html[dir="rtl"] .staff-kpi,
+html[dir="rtl"] .staff-table-card,
+html[dir="rtl"] .staff-form,
+html[dir="rtl"] .staff-password-card {
+  text-align: right;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .staff-kpis {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .staff-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-table-card {
+    padding: 16px;
+  }
+
+  .staff-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .staff-actions .button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   Vehicles UI Polish
+   ========================================================= */
+
+.vehicles-heading {
+  margin-bottom: 20px;
+}
+
+.vehicles-heading .button-primary {
+  min-height: 42px;
+  padding-inline: 18px;
+
+  border-color: var(--ima-red);
+  border-radius: 10px;
+
+  background: var(--ima-red);
+  color: #fff;
+}
+
+/* =========================================================
+   Vehicle KPI Cards
+   ========================================================= */
+
+.vehicle-kpis {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.vehicle-kpi {
+  padding: 18px 20px;
+
+  border: 1px solid;
+  border-radius: 12px;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.vehicle-kpi:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 18px
+    rgb(23 23 23 / 5%);
+}
+
+.vehicle-kpi span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vehicle-kpi strong {
+  display: block;
+
+  font-size: 27px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+/* Total */
+
+.vehicle-kpi.total {
+  border-color: #dfe4e1;
+
+  background: #f7f9f8;
+}
+
+.vehicle-kpi.total span {
+  color: #5f6964;
+}
+
+.vehicle-kpi.total strong {
+  color: #303633;
+}
+
+/* Available */
+
+.vehicle-kpi.available {
+  border-color: #b7e7cb;
+
+  background: #ecfdf3;
+}
+
+.vehicle-kpi.available span,
+.vehicle-kpi.available strong {
+  color: #007a3d;
+}
+
+/* On mission */
+
+.vehicle-kpi.mission {
+  border-color: #bfdbfe;
+
+  background: #eff6ff;
+}
+
+.vehicle-kpi.mission span,
+.vehicle-kpi.mission strong {
+  color: #1d4ed8;
+}
+
+/* Maintenance */
+
+.vehicle-kpi.maintenance {
+  border-color: #f7d79a;
+
+  background: #fff8e8;
+}
+
+.vehicle-kpi.maintenance span,
+.vehicle-kpi.maintenance strong {
+  color: #a85a08;
+}
+
+/* =========================================================
+   Vehicle Form
+   ========================================================= */
+
+.vehicle-form {
+  margin-bottom: 22px;
+
+  padding: 26px;
+
+  border-inline-start:
+    4px solid var(--ima-red);
+}
+
+.vehicle-form-heading {
+  margin-bottom: 20px;
+}
+
+.vehicle-form-heading > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--ima-red);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vehicle-form-heading h2 {
+  margin: 0;
+
+  font-size: 19px;
+}
+
+.vehicle-form fieldset {
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+}
+
+.vehicle-form-actions {
+  margin-top: 18px;
+}
+
+/* =========================================================
+   Vehicles Table
+   ========================================================= */
+
+.vehicles-table-card {
+  padding: 20px 22px;
+
+  overflow: hidden;
+}
+
+.vehicles-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.vehicles-table-heading h2 {
+  margin: 0 0 3px;
+
+  font-size: 16px;
+}
+
+.vehicles-table-heading span {
+  color: #737d78;
+
+  font-size: 12px;
+}
+
+.vehicles-table tbody tr {
+  transition:
+    background 120ms ease;
+}
+
+.vehicles-table tbody tr:hover {
+  background: #fafbfa;
+}
+
+.vehicles-table td {
+  vertical-align: middle;
+}
+
+/* Vehicle identity */
+
+.vehicle-code-cell {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.vehicle-code-icon {
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  font-size: 18px;
+}
+
+.vehicle-code-cell > div:last-child {
+  display: grid;
+
+  gap: 2px;
+}
+
+.vehicle-code-cell b {
+  color: #171717;
+
+  font-weight: 750;
+}
+
+.vehicle-code-cell small {
+  color: #737d78;
+
+  font-size: 11px;
+}
+
+.vehicle-plate {
+  font-weight: 600;
+}
+
+/* =========================================================
+   Vehicle Status
+   ========================================================= */
+
+.vehicle-list-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.vehicle-status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+/* Available */
+
+.vehicle-list-status.available {
+  background: #ecfdf3;
+
+  color: #007a3d;
+}
+
+.vehicle-list-status.available
+.vehicle-status-dot {
+  background: #22c55e;
+}
+
+/* On mission */
+
+.vehicle-list-status.on-mission {
+  background: #eff6ff;
+
+  color: #1d4ed8;
+}
+
+.vehicle-list-status.on-mission
+.vehicle-status-dot {
+  background: #3b82f6;
+}
+
+/* Maintenance */
+
+.vehicle-list-status.maintenance {
+  background: #fff8e8;
+
+  color: #a85a08;
+}
+
+.vehicle-list-status.maintenance
+.vehicle-status-dot {
+  background: #f59e0b;
+}
+
+/* =========================================================
+   Vehicle Action
+   ========================================================= */
+
+.vehicle-edit-button {
+  min-height: 36px;
+
+  padding: 7px 14px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+html[dir="rtl"] .vehicle-kpi,
+html[dir="rtl"] .vehicle-form,
+html[dir="rtl"] .vehicles-table-card {
+  text-align: right;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .vehicle-kpis {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .vehicle-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-form,
+  .vehicles-table-card {
+    padding: 16px;
+  }
+}
+
+/* =========================================================
+   AI Operations Assistant UI Polish
+   ========================================================= */
+
+.ai-assistant-page {
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.ai-assistant-heading {
+  margin-bottom: 20px;
+}
+
+.ai-assistant-heading h1 {
+  margin-bottom: 5px;
+}
+
+.ai-assistant-heading p {
+  max-width: 720px;
+}
+
+/* =========================================================
+   Safety notice
+   ========================================================= */
+
+.ai-safety-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+  padding: 15px 18px;
+
+  border: 1px solid #dfe4e1;
+  border-inline-start:
+    4px solid #94a39b;
+
+  border-radius: 10px;
+
+  background: #f8faf9;
+}
+
+.ai-safety-icon {
+  display: grid;
+  place-items: center;
+
+  width: 26px;
+  height: 26px;
+
+  flex: 0 0 26px;
+
+  border-radius: 50%;
+
+  background: #e8eeeb;
+
+  color: #56635c;
+
+  font-size: 13px;
+  font-weight: 800;
+  font-family: Georgia, serif;
+}
+
+.ai-safety-note strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #343c38;
+
+  font-size: 12px;
+}
+
+.ai-safety-note p {
+  margin: 0;
+
+  color: #626e68;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Main input card
+   ========================================================= */
+
+.ai-input-card {
+  position: relative;
+
+  margin-bottom: 24px;
+
+  padding: 26px 28px;
+
+  border-inline-start:
+    4px solid var(--ima-red);
+
+  overflow: hidden;
+}
+
+.ai-input-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 17px;
+}
+
+.ai-input-eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--ima-red);
+
+  font-size: 11px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ai-input-header h2 {
+  margin: 0;
+
+  font-size: 16px;
+}
+
+.ai-draft-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: #f3f4f6;
+
+  color: #59635e;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Textarea
+   ========================================================= */
+
+.ai-textarea-wrap {
+  position: relative;
+}
+
+.ai-textarea-wrap textarea {
+  display: block;
+
+  width: 100%;
+  min-height: 190px;
+
+  padding: 16px 17px;
+
+  resize: vertical;
+
+  border: 1px solid #d9dfdc;
+  border-radius: 11px;
+
+  background: #fbfcfb;
+
+  color: #171717;
+
+  font: inherit;
+  line-height: 1.6;
+
+  outline: none;
+
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
+}
+
+.ai-textarea-wrap textarea::placeholder {
+  color: #9aa39f;
+}
+
+.ai-textarea-wrap textarea:hover {
+  border-color: #cbd3cf;
+}
+
+.ai-textarea-wrap textarea:focus {
+  border-color: var(--ima-red);
+
+  background: #fff;
+
+  box-shadow:
+    0 0 0 3px
+    rgb(237 28 36 / 8%);
+}
+
+.ai-textarea-wrap textarea:disabled {
+  cursor: not-allowed;
+
+  background: #f7f8f7;
+}
+
+/* =========================================================
+   Loading state
+   ========================================================= */
+
+.ai-analyzing-overlay {
+  position: absolute;
+
+  right: 12px;
+  bottom: 12px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 10px;
+
+  border: 1px solid #ffd2d4;
+  border-radius: 8px;
+
+  background: #fff5f5;
+
+  color: var(--ima-red-dark);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.ai-loading-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--ima-red);
+
+  animation:
+    aiPulse
+    1s ease-in-out
+    infinite;
+}
+
+@keyframes aiPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================================
+   Meta / counter
+   ========================================================= */
+
+.ai-note-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  margin-top: 10px;
+
+  color: #737d78;
+
+  font-size: 11px;
+}
+
+.ai-note-meta strong {
+  font-weight: 650;
+
+  color: #737d78;
+}
+
+.ai-note-meta strong.is-valid {
+  color: #007a3d;
+}
+
+.ai-note-meta strong.is-invalid {
+  color: #b91c1c;
+}
+
+/* =========================================================
+   Error
+   ========================================================= */
+
+.ai-input-error {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.ai-input-actions {
+  justify-content: flex-end;
+
+  margin-top: 20px;
+}
+
+.ai-input-actions .button {
+  min-height: 42px;
+
+  padding-inline: 18px;
+
+  border-radius: 9px;
+}
+
+.ai-analyze-button {
+  min-width: 140px;
+
+  border-color: var(--ima-red);
+
+  background: var(--ima-red);
+  color: #fff;
+}
+
+.ai-analyze-button:hover:not(:disabled) {
+  background: var(--ima-red-dark);
+
+  border-color: var(--ima-red-dark);
+}
+
+.ai-analyze-button:disabled {
+  opacity: 0.48;
+}
+
+/* =========================================================
+   Result area
+   ========================================================= */
+
+.ai-result-section {
+  margin-top: 28px;
+}
+
+.ai-result-divider {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+
+  color: #69736e;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ai-result-divider::before,
+.ai-result-divider::after {
+  content: '';
+
+  height: 1px;
+
+  flex: 1;
+
+  background: #dfe4e1;
+}
+
+.ai-result-divider span {
+  white-space: nowrap;
+}
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+html[dir="rtl"] .ai-assistant-page,
+html[dir="rtl"] .ai-input-card,
+html[dir="rtl"] .ai-safety-note {
+  text-align: right;
+}
+
+html[dir="rtl"]
+.ai-analyzing-overlay {
+  right: auto;
+  left: 12px;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .ai-input-card {
+    padding: 20px;
+  }
+
+  .ai-input-header {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .ai-textarea-wrap textarea {
+    min-height: 170px;
+  }
+
+  .ai-input-actions {
+    flex-direction: column-reverse;
+  }
+
+  .ai-input-actions .button {
+    width: 100%;
+  }
+
+  .ai-safety-note {
+    padding: 14px;
+  }
+}
+
+/* Append to the existing global stylesheet. Scoped to the top-level AI form. */
+.ai-assistant-page .ai-assistant-heading { margin-bottom: 1.5rem; }
+.ai-assistant-page .ai-assistant-safety {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px 18px; border: 1px solid #eadfc8;
+  border-radius: 12px; background: #fffbf2; color: #66522a;
+}
+.ai-assistant-page .ai-assistant-safety p { margin: 0; line-height: 1.65; font-size: .9rem; }
+.ai-assistant-page .ai-assistant-info-icon {
+  display: inline-flex; flex: 0 0 20px; align-items: center; justify-content: center;
+  width: 20px; height: 20px; margin-top: 2px; border: 1.5px solid currentColor;
+  border-radius: 50%; font-size: 13px; font-weight: 700;
+}
+.ai-assistant-page .ai-assistant-form {
+  margin: 20px 0 24px; padding: 24px; background: #fff;
+  border: 1px solid #e5e7eb; border-left: 4px solid #b91c1c;
+  border-radius: 14px; box-shadow: 0 4px 18px rgb(15 23 42 / 4%);
+}
+.ai-assistant-page .ai-assistant-form-heading { margin-bottom: 16px; }
+.ai-assistant-page .ai-assistant-form-heading label {
+  display: block; color: #182230; font-size: 1.1rem; font-weight: 700;
+}
+.ai-assistant-page .ai-assistant-form-heading p {
+  margin: 6px 0 0; color: #667085; font-size: .9rem; line-height: 1.6;
+}
+.ai-assistant-page .ai-assistant-textarea {
+  display: block; box-sizing: border-box; width: 100%; min-height: 180px;
+  padding: 16px; border: 1px solid #cfd5de; border-radius: 10px;
+  background: #fcfcfd; color: #182230; font: inherit; line-height: 1.7;
+  resize: vertical; transition: border-color .15s, box-shadow .15s;
+}
+.ai-assistant-page .ai-assistant-textarea:focus {
+  outline: 2px solid #b91c1c; outline-offset: 2px;
+  border-color: #b91c1c; background: #fff;
+}
+.ai-assistant-page .ai-assistant-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 18px; margin-top: 18px;
+}
+.ai-assistant-page .ai-assistant-length {
+  display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0;
+  color: #667085; font-size: .85rem; font-variant-numeric: tabular-nums;
+}
+.ai-assistant-page .ai-assistant-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+.ai-assistant-page .ai-assistant-actions button {
+  min-height: 44px; padding: 10px 20px; border-radius: 9px; font: inherit;
+  font-weight: 600; cursor: pointer;
+}
+.ai-assistant-page .ai-assistant-clear { background: #fff; border: 1px solid #d0d5dd; color: #344054; }
+.ai-assistant-page .ai-assistant-clear:hover:not(:disabled) { background: #f2f4f7; }
+.ai-assistant-page .ai-assistant-analyze { background: #b91c1c; border: 1px solid #b91c1c; color: #fff; }
+.ai-assistant-page .ai-assistant-analyze:hover:not(:disabled) { background: #991b1b; border-color: #991b1b; }
+.ai-assistant-page .ai-assistant-actions button:focus-visible { outline: 2px solid #b91c1c; outline-offset: 3px; }
+.ai-assistant-page .ai-assistant-actions button:disabled,
+.ai-assistant-page .ai-assistant-textarea:disabled { opacity: .6; cursor: not-allowed; }
+.ai-assistant-page .ai-assistant-empty {
+  display: flex; align-items: flex-start; gap: 14px; padding: 22px;
+  border: 1px dashed #d0d5dd; border-radius: 12px; background: #f9fafb;
+}
+.ai-assistant-page .ai-assistant-draft-icon {
+  display: inline-flex; flex-shrink: 0; padding: 10px;
+  border-radius: 10px; background: #fff; color: #667085;
+}
+.ai-assistant-page .ai-assistant-empty h2 { margin: 0 0 6px; font-size: 1rem; color: #344054; }
+.ai-assistant-page .ai-assistant-empty p { margin: 0; color: #667085; font-size: .9rem; line-height: 1.6; }
+@media (max-width: 600px) {
+  .ai-assistant-page .ai-assistant-form { padding: 18px 16px; }
+  .ai-assistant-page .ai-assistant-footer { align-items: stretch; flex-direction: column; }
+  .ai-assistant-page .ai-assistant-length { justify-content: space-between; }
+  .ai-assistant-page .ai-assistant-actions button { flex: 1; }
+  .ai-assistant-page .ai-assistant-empty { padding: 18px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-assistant-page .ai-assistant-textarea { transition: none; }
+}
+
+/* Shared checkbox rows across the application. */
+.portal-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-block-start: 20px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.portal-checkbox input[type="checkbox"] {
+  appearance: auto;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  padding: 0;
+  accent-color: #cf142b;
+  cursor: pointer;
+}
+
+.portal-checkbox:has(input:checked) {
+  border-color: #e9a6ae;
+  background: #fff5f6;
+}
+
+.portal-checkbox:has(input:focus-visible) {
+  outline: 2px solid #cf142b;
+  outline-offset: 3px;
+}
+
+.portal-checkbox:has(input:disabled) {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.portal-checkbox input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}

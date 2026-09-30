@@ -69,3 +69,66 @@ test('portal bridge supports explicit staff password reset without returning sub
   assert.deepEqual(JSON.parse(app.calls[0].body), payload);
   assert.deepEqual(result.data, { detail: 'password_reset_success' });
 });
+
+test('submissions bridge allows staff routes and preserves permission denials', async () => {
+  for (const kind of ['contact', 'volunteer']) {
+    for (const suffix of ['', '?status=NEW', '1/', '1/status/']) {
+      const path = `submissions/staff/${kind}/${suffix}`;
+      const method = suffix.endsWith('status/') ? 'PATCH' : 'GET';
+      const app = harness();
+      assert.equal((await app.portalRequest(path, method, undefined, 'ar')).status, 200);
+      assert.ok(app.calls[0].url.endsWith(`/api/${path}`));
+      assert.equal(app.calls[0].headers['Accept-Language'], 'ar');
+      const denied = harness(undefined, { status: 403, body: { detail: 'denied' } });
+      assert.equal((await denied.portalRequest(path, method)).status, 403);
+    }
+  }
+  const app = harness();
+  for (const path of ['submissions/contact/', 'submissions/staff/contact/../', 'submissions/staff/volunteer/1/delete/']) {
+    assert.equal((await app.portalRequest(path)).status, 400);
+  }
+  assert.equal(app.calls.length, 0);
+});
+
+
+test('equipment and lending bridge supports only the declared routes', async () => {
+  for (const [path, method] of [
+    ['equipment/', 'POST'], ['equipment/types/', 'GET'], ['equipment/summary/', 'GET'],
+    ['equipment/1/', 'PATCH'], ['equipment/?status=AVAILABLE', 'GET'],
+    ['lending/', 'POST'], ['lending/1/', 'GET'], ['lending/1/return/', 'POST'],
+    ['lending/?status=OVERDUE', 'GET'],
+  ]) {
+    const app = harness();
+    assert.equal((await app.portalRequest(path, method, undefined, 'ar')).status, 200);
+    assert.ok(app.calls[0].url.endsWith(`/api/${path}`));
+    assert.equal(app.calls[0].headers['Accept-Language'], 'ar');
+  }
+  const app = harness();
+  for (const path of ['equipment/../staff/', 'equipment/1/return/', 'lending/return/', 'lending/1/delete/', 'lending/%2e%2e/auth/']) {
+    assert.equal((await app.portalRequest(path)).status, 400);
+  }
+  assert.equal(app.sessionCalls(), 0);
+});
+
+test('vehicle issue bridge permits only explicit routes and methods', async () => {
+  for (const [path, method] of [
+    ['vehicle-issues/', 'GET'], ['vehicle-issues/', 'POST'],
+    ['vehicle-issues/?vehicle=1&status=OPEN&severity=HIGH&category=brake', 'GET'],
+    ['vehicle-issues/summary/', 'GET'], ['vehicle-issues/7/', 'GET'],
+    ['vehicle-issues/7/', 'PATCH'], ['vehicle-issues/7/maintenance/', 'POST'],
+    ['vehicle-issues/7/resolve/', 'POST'],
+  ]) {
+    const app = harness();
+    assert.equal((await app.portalRequest(path, method)).status, 200, `${method} ${path}`);
+  }
+  const app = harness();
+  for (const [path, method] of [
+    ['vehicle-issues/7/delete/', 'POST'], ['vehicle-issues/7/', 'DELETE'],
+    ['vehicle-issues/summary/', 'POST'], ['vehicle-issues/7/resolve/', 'GET'],
+    ['vehicle-issues/7/maintenance/', 'PATCH'], ['vehicle-issues/../staff/', 'GET'],
+    ['vehicle-issues/7/', 'POST'], ['vehicle-issues/', 'PATCH'],
+  ]) assert.equal((await app.portalRequest(path, method)).status, 400, `${method} ${path}`);
+  assert.equal(app.sessionCalls(), 0);
+  const denied = harness(undefined, { status: 403, body: { detail: 'denied' } });
+  assert.equal((await denied.portalRequest('vehicle-issues/')).status, 403);
+});

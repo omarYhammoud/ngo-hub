@@ -36,7 +36,7 @@ class VehicleViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         if serializer.validated_data.get('status') == 'ON_MISSION':
             raise ValidationError({'detail': 'vehicle_status_automatic'})
-        serializer.save()
+        serializer.save(manual_maintenance=serializer.validated_data.get('status') == 'MAINTENANCE')
         return Response(serializer.data, status=201)
 
     @transaction.atomic
@@ -47,11 +47,18 @@ class VehicleViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         target = serializer.validated_data.get('status', vehicle.status)
         occupied = vehicle.missions.filter(status='ACTIVE').exists()
+        if target != 'MAINTENANCE' and vehicle.issues.filter(status='IN_MAINTENANCE').exists():
+            raise ValidationError({'detail': 'vehicle_issue_maintenance_hold'})
         if target == 'ON_MISSION' and target != vehicle.status:
             raise ValidationError({'detail': 'vehicle_status_automatic'})
         if target == 'AVAILABLE' and occupied:
             raise ValidationError({'detail': 'vehicle_has_active_mission'})
-        serializer.save()
+        manual_hold = vehicle.manual_maintenance
+        if target == 'MAINTENANCE' and vehicle.status != 'MAINTENANCE':
+            manual_hold = True
+        elif target != 'MAINTENANCE':
+            manual_hold = False
+        serializer.save(manual_maintenance=manual_hold)
         return Response(serializer.data)
 
 

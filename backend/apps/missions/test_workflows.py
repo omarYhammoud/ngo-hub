@@ -73,8 +73,10 @@ class MissionWorkflowTests(APITestCase):
 
     def test_historical_and_pending_completion_cannot_release_another_active_vehicle(self):
         active = self.create()
-        self.command(active,'start',{'actual_start':self.start.isoformat()})
         pending = self.create(self.medic)
+        self.client.force_authenticate(self.admin)
+        self.command(active,'start',{'actual_start':self.start.isoformat()})
+        self.client.force_authenticate(self.medic)
         self.assertEqual(self.command(pending,'complete',self.actual).status_code,200)
         response=self.client.post('/api/missions/historical/',{**self.base,**self.actual},format='json')
         self.assertEqual(response.status_code,201,response.data)
@@ -90,8 +92,10 @@ class MissionWorkflowTests(APITestCase):
 
     def test_pending_and_historical_completion_without_end_preserves_occupied_vehicle(self):
         active = self.create()
-        self.command(active, 'start', {'actual_start': self.start.isoformat()})
         pending = self.create(self.medic, incident_type='Existing custom type')
+        self.client.force_authenticate(self.admin)
+        self.command(active, 'start', {'actual_start': self.start.isoformat()})
+        self.client.force_authenticate(self.medic)
         actual = {key: value for key, value in self.actual.items() if key != 'actual_end'}
         response = self.command(pending, 'complete', actual)
         self.assertEqual(response.status_code, 200, response.data)
