@@ -1,6 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Staff login at `/en/login` and `/ar/login` connects to Django through server actions. Start the backend on port 8000 first (see `../backend/README.md`). Set `DJANGO_API_URL` in `.env.local` if the backend uses another address; never prefix this setting with `NEXT_PUBLIC_`. Tokens are stored in HttpOnly cookies with automatic refresh rotation. Successful login shows a staff profile and sign-out control; operational modules are still under development.
+Staff login at `/en/login` and `/ar/login` connects to Django through server actions. Start the backend on port 8000 first (see `../backend/README.md`). Set `DJANGO_API_URL` in `.env.local` if the backend uses another address; never prefix this setting with `NEXT_PUBLIC_`. Tokens are stored in HttpOnly cookies with automatic refresh rotation. Successful login opens the bilingual staff portal with scoped dashboard, Missions, actual staff participation, Super Admin staff accounts and role-restricted vehicle records. Arabic uses a right-to-left layout. The public site remains at `/en` and `/ar`.
+
+See [the milestone guide](../docs/milestone-one.md) for workflow rules, verification and deferred scope. Use `127.0.0.1` consistently when testing login locally so cookies remain on the same host.
 
 Run `npm test`, `npm run lint`, and `npm run build` to verify authentication, code checks, and the production build. If a stale global npm shim fails on Windows, use `& 'C:/Program Files/nodejs/npm.cmd' run dev` (or the corresponding npm command).
 

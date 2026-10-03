@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 const origin = process.env.DJANGO_API_URL || 'http://127.0.0.1:8000';
 const options = { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' as const, path: '/' };
-export type StaffUser = { id: number; username: string; first_name: string; last_name: string; email: string; role: 'ADMIN' | 'PARAMEDIC' };
+export type StaffUser = { id: number; username: string; first_name: string; last_name: string; email: string; phone: string; role: 'SUPER_ADMIN' | 'OPERATIONS_MANAGER' | 'PARAMEDIC' | 'LENDING_OFFICER' | 'VEHICLE_MANAGER'; capabilities: string[] };
 
 async function api(path: string, body?: object, access?: string) {
   return fetch(`${origin}/api/auth/${path}/`, {

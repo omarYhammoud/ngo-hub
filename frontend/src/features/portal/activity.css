@@ -1,0 +1,626 @@
+.activity-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.activity-stats h2,
+.portal-table-wrap h2 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+}
+
+.activity-summary-card {
+  padding: 22px;
+}
+
+.activity-total {
+  display: block;
+  margin-top: 6px;
+
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 700;
+
+  color: #ed1b24;
+}
+
+/* =========================================================
+   Monthly Activity Card
+   ========================================================= */
+
+.activity-month-card {
+  min-height: 220px;
+}
+
+.activity-month-primary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  margin-top: 8px;
+  padding: 22px;
+
+  border: 1px solid #f1d5d6;
+  border-radius: 14px;
+
+  background: #fffafa;
+}
+
+.activity-month-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 72px;
+
+  flex-shrink: 0;
+
+  border-radius: 16px;
+
+  background: #ed1c24;
+  color: #ffffff;
+
+  font-size: 30px;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.activity-month-info {
+  display: grid;
+  gap: 5px;
+}
+
+.activity-month-info strong {
+  color: #171717;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.activity-month-info span {
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+.activity-month-previous {
+  display: grid;
+
+  margin-top: 16px;
+}
+
+.activity-month-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid #eef0ef;
+
+  font-size: 12px;
+}
+
+.activity-month-row:last-child {
+  border-bottom: 0;
+}
+
+.activity-month-row span {
+  color: #66706b;
+}
+
+.activity-month-row strong {
+  color: #171717;
+  font-weight: 700;
+}
+
+/* =========================================================
+   Incident Type Analytics
+   ========================================================= */
+
+.activity-breakdown-card {
+  min-height: 220px;
+}
+
+.activity-chart-list {
+  display: grid;
+  gap: 16px;
+}
+
+.activity-chart-row {
+  display: grid;
+  gap: 7px;
+}
+
+.activity-chart-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  font-size: 13px;
+}
+
+.activity-chart-label span {
+  min-width: 0;
+
+  color: #303633;
+
+  overflow-wrap: anywhere;
+}
+
+.activity-chart-label strong {
+  flex-shrink: 0;
+
+  color: #171717;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.activity-chart-track {
+  height: 7px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #eef0ef;
+}
+
+.activity-chart-fill {
+  height: 100%;
+  min-width: 4px;
+
+  border-radius: inherit;
+
+  background: #ed1c24;
+
+  transition: width 180ms ease;
+}
+
+.activity-undated {
+  margin-top: 16px;
+
+  color: #66706b;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   Mission History
+   ========================================================= */
+
+.activity-history {
+  margin-top: 0;
+}
+
+.activity-mission-link {
+  color: #b91c1c;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.activity-mission-link:hover {
+  color: #ed1c24;
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.activity-history .portal-table td {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+/*
+ * Keep old activity-breakdown support for the printable report.
+ */
+.activity-breakdown {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  max-height: 280px;
+
+  overflow-y: auto;
+}
+
+.activity-breakdown li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #eee;
+}
+
+.activity-breakdown li:last-child {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .activity-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+
+    margin-bottom: 18px;
+  }
+
+  .activity-month-card,
+  .activity-breakdown-card {
+    min-height: 0;
+  }
+
+  .activity-month-primary {
+    padding: 18px;
+  }
+
+  .activity-month-number {
+    width: 62px;
+    height: 62px;
+
+    font-size: 26px;
+  }
+
+  .activity-total {
+    font-size: 1.75rem;
+  }
+}
+
+/*
+ * Hide print-only report during normal browsing.
+ */
+.report-print-area {
+  display: none;
+}
+
+/* =========================================================
+   PRINT / SAVE AS PDF
+   ========================================================= */
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+
+    overflow: visible !important;
+
+    background: #ffffff !important;
+
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /*
+   * Reports.tsx renders the printable report
+   * directly inside document.body using createPortal().
+   *
+   * Hide the rest of the application.
+   */
+  body > *:not(#report-print-area) {
+    display: none !important;
+  }
+
+  /*
+   * Main printable document
+   */
+  #report-print-area {
+    display: block !important;
+
+    position: static !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    background: #ffffff !important;
+    color: #171717 !important;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+  }
+
+  /*
+   * Header
+   */
+  #report-print-area .report-print-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin: 0 0 16px;
+    padding: 0 0 12px;
+
+    border-bottom: 2px solid #ed1c24;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #report-print-area .report-print-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #report-print-area .report-print-logo {
+    display: block;
+
+    width: 54px !important;
+    height: 54px !important;
+
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  #report-print-area .report-print-org {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  #report-print-area .report-print-system {
+    margin-top: 2px;
+
+    font-size: 10px;
+    line-height: 1.4;
+
+    color: #66706b;
+  }
+
+  #report-print-area .report-print-title {
+    flex-shrink: 0;
+  }
+
+  #report-print-area .report-print-title h1 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  #report-print-area .report-print-title p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+    line-height: 1.4;
+
+    color: #66706b;
+  }
+
+  /*
+   * Cards
+   */
+  #report-print-area .portal-card {
+    display: block !important;
+
+    margin: 0 0 12px !important;
+    padding: 10px !important;
+
+    background: #ffffff !important;
+
+    border: 1px solid #e5e7e6 !important;
+    border-radius: 6px !important;
+
+    box-shadow: none !important;
+
+    overflow: visible !important;
+  }
+
+  #report-print-area .portal-card h2 {
+    margin: 0 0 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  #report-print-area .portal-card p {
+    margin: 0 0 8px;
+
+    font-size: 10px;
+    color: #66706b;
+  }
+
+  /*
+   * Tables
+   */
+  #report-print-area .portal-table-wrap {
+    display: block !important;
+
+    width: 100% !important;
+
+    overflow: visible !important;
+  }
+
+  #report-print-area table,
+  #report-print-area .portal-table {
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+
+    table-layout: auto;
+
+    font-size: 9px;
+  }
+
+  #report-print-area thead {
+    display: table-header-group;
+  }
+
+  #report-print-area tfoot {
+    display: table-footer-group;
+  }
+
+  #report-print-area tbody {
+    display: table-row-group;
+  }
+
+  #report-print-area tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #report-print-area th,
+  #report-print-area td {
+    border: 1px solid #d8dbda !important;
+
+    padding: 5px !important;
+
+    vertical-align: top;
+
+    white-space: normal !important;
+
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  #report-print-area th {
+    background: #f7f8f7 !important;
+
+    color: #171717 !important;
+
+    font-weight: 700;
+
+    text-align: inherit;
+  }
+
+  /*
+   * Activity report breakdown cards
+   */
+  #report-print-area .report-print-breakdowns {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin: 0 0 12px;
+  }
+
+  #report-print-area
+    .report-print-breakdowns
+    .portal-card {
+    margin-bottom: 0 !important;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #report-print-area .activity-breakdown {
+    max-height: none !important;
+
+    overflow: visible !important;
+  }
+
+  #report-print-area .activity-breakdown li {
+    padding: 5px 0;
+
+    font-size: 9px;
+  }
+
+  /*
+   * Status badges should print as clean text.
+   */
+  #report-print-area .portal-badge {
+    display: inline !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+
+    color: #171717 !important;
+
+    font-weight: 600;
+  }
+
+  /*
+   * Links should not look like web links in PDF.
+   */
+  #report-print-area a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /*
+   * Hide any interactive controls.
+   */
+  #report-print-area button,
+  #report-print-area .portal-buttons {
+    display: none !important;
+  }
+
+  /*
+   * Arabic / English direction
+   */
+  #report-print-area[dir='rtl'] {
+    direction: rtl;
+    text-align: right;
+  }
+
+  #report-print-area[dir='ltr'] {
+    direction: ltr;
+    text-align: left;
+  }
+
+  #report-print-area[dir='rtl']
+    .report-print-title {
+    text-align: left;
+  }
+
+  #report-print-area[dir='ltr']
+    .report-print-title {
+    text-align: right;
+  }
+
+  /*
+   * Prevent accidental empty trailing page.
+   */
+  #report-print-area > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
